@@ -4,9 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShowFeed</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("css", false)
 </head>
 <body>
     <h1>ShowFeed</h1>
     @RenderBody()
+    @Scripts.Render("~/Scripts/js")
+    @RenderSection("scripts", false)
 </body>
 </html>
