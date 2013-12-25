@@ -8,8 +8,19 @@
     @RenderSection("css", false)
 </head>
 <body>
-    <h1>ShowFeed</h1>
-    @RenderBody()
+    <div id="layout">
+        <div id="menu">
+            <div class="header">
+                <a href="/">ShowFeed</a>
+            </div>
+            <ul>
+                <li><a href="#">Upcomming</a></li>
+            </ul>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+    </div>
     @Scripts.Render("~/Scripts/js")
     @RenderSection("scripts", false)
 </body>

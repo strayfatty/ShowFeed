@@ -14,7 +14,8 @@
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap.css"));
+                "~/Content/bootstrap.css",
+                "~/Content/layout.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/js").Include(
                 "~/Scripts/jquery-2.0.3.js",
