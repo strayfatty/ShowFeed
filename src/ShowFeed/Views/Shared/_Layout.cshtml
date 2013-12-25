@@ -4,9 +4,80 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShowFeed</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("css", false)
 </head>
 <body>
-    <h1>ShowFeed</h1>
-    @RenderBody()
+    <div id="layout">
+        <div id="nav">
+            <div class="top">
+                <a href="/">ShowFeed</a>
+            </div>
+            <div class="content">
+                <div class="section">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <span class="icon glyphicon glyphicon-time"></span>
+                                <span class="title">Upcomming</span>
+                            </a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a href="#">
+                                    <span class="icon glyphicon glyphicon-tasks"></span>
+                                    <span class="title">Watch Later</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="icon glyphicon glyphicon-film"></span>
+                                    <span class="title">Subscriptions</span>
+                                </a>
+                            </li>
+                        }
+                        <li class="divider"></li>
+                   </ul>
+                </div>
+                <div class="section">
+                    <ul>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a href="#">
+                                    <span class="icon"></span>
+                                    <span class="title">Log out</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#">
+                                    <span class="icon"></span>
+                                    <span class="title">Log in</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="icon"></span>
+                                    <span class="title">Sign up</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom">
+                
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+    </div>
+    @Scripts.Render("~/Scripts/js")
+    @RenderSection("scripts", false)
 </body>
 </html>
