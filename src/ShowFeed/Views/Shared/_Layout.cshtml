@@ -9,13 +9,44 @@
 </head>
 <body>
     <div id="layout">
-        <div id="menu">
-            <div class="header">
+        <div id="nav">
+            <div class="top">
                 <a href="/">ShowFeed</a>
             </div>
-            <ul>
-                <li><a href="#">Upcomming</a></li>
-            </ul>
+            <div class="content">
+                <div class="section">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <span class="icon glyphicon glyphicon-time"></span>
+                                <span class="title">Upcomming</span>
+                            </a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a href="#">
+                                    <span class="icon glyphicon glyphicon-tasks"></span>
+                                    <span class="title">Watch Later</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="icon glyphicon glyphicon-film"></span>
+                                    <span class="title">Subscriptions</span>
+                                </a>
+                            </li>
+                        }
+                        <li class="divider"></li>
+                   </ul>
+                </div>
+                <div class="section">
+                    
+                </div>
+            </div>
+            <div class="bottom">
+                
+            </div>
         </div>
         <div id="main">
             @RenderBody()
