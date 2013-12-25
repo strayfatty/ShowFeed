@@ -41,7 +41,32 @@
                    </ul>
                 </div>
                 <div class="section">
-                    
+                    <ul>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a href="#">
+                                    <span class="icon"></span>
+                                    <span class="title">Log out</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#">
+                                    <span class="icon"></span>
+                                    <span class="title">Log in</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="icon"></span>
+                                    <span class="title">Sign up</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
             <div class="bottom">
