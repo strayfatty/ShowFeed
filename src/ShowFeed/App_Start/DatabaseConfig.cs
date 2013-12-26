@@ -1,5 +1,12 @@
 ﻿namespace ShowFeed.App_Start
 {
+    using System.Data.Entity;
+    using System.Linq;
+
+    using ShowFeed.Models;
+
+    using WebMatrix.WebData;
+
     /// <summary>
     /// The database configuration class.
     /// </summary>
@@ -11,6 +18,13 @@
         public static void Initialize()
         {
             // TODO:
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShowFeedDatabase>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShowFeedDatabase, Configuration>());
+
+            // One call into the database is required for the update to take place.
+            var profiles = new ShowFeedDatabase().Set<User>().FirstOrDefault();
+
+            WebSecurity.InitializeDatabaseConnection(ShowFeedDatabase.ConnectionStringName, "User", "Id", "Username", true);
         }
     }
 }

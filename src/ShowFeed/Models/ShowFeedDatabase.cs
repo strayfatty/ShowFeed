@@ -9,10 +9,15 @@
     public class ShowFeedDatabase : DbContext, IDatabase
     {
         /// <summary>
+        /// The connection string name.
+        /// </summary>
+        public const string ConnectionStringName = "ShowFeedDatabase";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ShowFeedDatabase"/> class.
         /// </summary>
         public ShowFeedDatabase()
-            : base("ShowFeedDatabase")
+            : base(ConnectionStringName)
         {
         }
 
