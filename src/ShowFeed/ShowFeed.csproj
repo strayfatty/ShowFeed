@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\IDatabase.cs" />
+    <Compile Include="Models\ShowFeedDatabase.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
