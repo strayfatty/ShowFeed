@@ -3,6 +3,7 @@
     using System.Data.Entity;
     using System.Linq;
 
+    using ShowFeed.Migrations;
     using ShowFeed.Models;
 
     using WebMatrix.WebData;
@@ -17,9 +18,7 @@
         /// </summary>
         public static void Initialize()
         {
-            // TODO:
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShowFeedDatabase>());
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShowFeedDatabase, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShowFeedDatabase, Configuration>());
 
             // One call into the database is required for the update to take place.
             var profiles = new ShowFeedDatabase().Set<User>().FirstOrDefault();
