@@ -20,7 +20,7 @@
             routes.MapRoute("logout", "logout", new { controller = "Account", action = "LogOut" });
             routes.MapRoute("signup", "signup", new { controller = "Account", action = "SignUp" });
 
-            routes.MapRoute("home", "home", new { controller = "Home", action = "Index" });
+            routes.MapRoute("home", string.Empty, new { controller = "Home", action = "Index" });
         }
     }
 }
