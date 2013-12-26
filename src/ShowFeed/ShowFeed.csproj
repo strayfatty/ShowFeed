@@ -143,6 +143,7 @@
     <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -157,6 +158,8 @@
     <Compile Include="Models\ShowFeedDatabase.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AccountSignUpViewModel.cs" />
+    <Compile Include="ViewModels\AccountLogInViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -168,6 +171,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\jquery-2.0.3.min.map" />
+    <Content Include="Views\Account\SignUp.cshtml" />
+    <Content Include="Views\Account\LogIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

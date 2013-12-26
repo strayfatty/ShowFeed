@@ -1,0 +1,26 @@
+﻿@model ShowFeed.ViewModels.AccountLogInViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form class="form-horizontal" action="@Url.RouteUrl("login")" method="post">
+    <fieldset>
+        <legend>Log In</legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Username, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Username" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-8">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Log up</button>
+        </div>
+    </fieldset>
+</form>
