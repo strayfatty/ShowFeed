@@ -21,6 +21,7 @@
             routes.MapRoute("signup", "signup", new { controller = "Account", action = "SignUp" });
 
             routes.MapRoute("home", string.Empty, new { controller = "Home", action = "Index" });
+            routes.MapRoute("upcoming", "upcoming", new { controller = "Home", action = "Upcoming" });
         }
     }
 }
