@@ -128,6 +128,17 @@
     <Content Include="Content\bs-sidebar.css" />
     <Content Include="Content\calendar.css" />
     <Content Include="Content\calendar.min.css" />
+    <Content Include="Content\img\dark_wood.png" />
+    <Content Include="Content\img\slide-bg.png" />
+    <Content Include="Content\img\tick.png" />
+    <Content Include="Content\tmpls\day.html" />
+    <Content Include="Content\tmpls\events-list.html" />
+    <Content Include="Content\tmpls\month-day.html" />
+    <Content Include="Content\tmpls\month.html" />
+    <Content Include="Content\tmpls\week-days.html" />
+    <Content Include="Content\tmpls\week.html" />
+    <Content Include="Content\tmpls\year-month.html" />
+    <Content Include="Content\tmpls\year.html" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -192,8 +203,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\" />
-    <Folder Include="Content\tmpls\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201312261448321_AddUser.resx">
