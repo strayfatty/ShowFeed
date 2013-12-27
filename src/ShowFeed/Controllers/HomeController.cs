@@ -16,5 +16,15 @@
         {
             return this.View();
         }
+
+        /// <summary>
+        /// The upcoming view.
+        /// </summary>
+        /// <returns>An action result.</returns>
+        [HttpGet]
+        public ActionResult Upcoming()
+        {
+            return this.View();
+        }
     }
 }
