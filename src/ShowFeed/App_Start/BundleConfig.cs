@@ -15,7 +15,7 @@
         {
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/layout.css"));
+                "~/Content/bs-sidebar.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/js").Include(
                 "~/Scripts/jquery-2.0.3.js",
