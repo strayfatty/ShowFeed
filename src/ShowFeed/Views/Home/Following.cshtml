@@ -1,7 +1,62 @@
-﻿@{
+﻿@model ShowFeed.ViewModels.HomeFollowingViewModel
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="page-header">
     <h3>Following</h3>
+</div>
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#searchModal">Add show</button>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th style="width: 3em"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var show in Model.Shows.OrderBy(x => x.Name))
+        {
+            <tr>
+                <td>@show.Name</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">@show.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="searchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="searchModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="searchModalTitle" class="modal-title">Add Show</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="enter show title">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+                <div id="searchResult">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
