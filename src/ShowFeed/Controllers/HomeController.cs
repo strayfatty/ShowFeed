@@ -12,6 +12,7 @@
         /// </summary>
         /// <returns>An action result.</returns>
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return this.View();
@@ -22,6 +23,7 @@
         /// </summary>
         /// <returns>An action result.</returns>
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Upcoming()
         {
             return this.View();
