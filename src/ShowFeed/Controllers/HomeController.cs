@@ -26,5 +26,15 @@
         {
             return this.View();
         }
+
+        /// <summary>
+        /// The following view.
+        /// </summary>
+        /// <returns>An action result.</returns>
+        [HttpGet]
+        public ActionResult Following()
+        {
+            return this.View();
+        }
     }
 }

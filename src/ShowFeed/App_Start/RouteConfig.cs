@@ -22,6 +22,7 @@
 
             routes.MapRoute("home", string.Empty, new { controller = "Home", action = "Index" });
             routes.MapRoute("upcoming", "upcoming", new { controller = "Home", action = "Upcoming" });
+            routes.MapRoute("following", "following", new { controller = "Home", action = "Following" });
         }
     }
 }

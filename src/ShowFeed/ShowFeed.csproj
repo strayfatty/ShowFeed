@@ -200,6 +200,7 @@
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\Home\Upcoming.cshtml" />
+    <Content Include="Views\Home\Following.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
