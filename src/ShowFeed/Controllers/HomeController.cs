@@ -69,5 +69,50 @@
 
             return this.View(model);
         }
+
+        /// <summary>
+        /// The search TV show view.
+        /// </summary>
+        /// <returns>An action result.</returns>
+        [HttpGet]
+        public ActionResult SearchTvShow()
+        {
+            return this.View(new HomeSearchTvShowViewModel());
+        }
+
+        /// <summary>
+        /// The search TV show action.
+        /// </summary>
+        /// <param name="showName">The show name.</param>
+        /// <returns>An action result.</returns>
+        [HttpPost]
+        public ActionResult SearchTvShow(string showName)
+        {
+            var model = new HomeSearchTvShowViewModel();
+            model.ShowName = showName;
+            // TODO: model.Shows = ...;
+
+            model.Shows = new []
+            {
+                new HomeSearchTvShowViewModel.Show
+                {
+                    ShowId = 3333,
+                    Name = "Doctor Who (2005)",
+                    Description = string.Empty,
+                    Link = "...",
+                    Following = false
+                },
+                new HomeSearchTvShowViewModel.Show
+                {
+                    ShowId = 3334,
+                    Name = "Doctor Who",
+                    Description = string.Empty,
+                    Link = "...",
+                    Following = true
+                },
+            };
+
+            return this.View(model);
+        }
     }
 }
