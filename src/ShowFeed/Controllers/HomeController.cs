@@ -4,6 +4,7 @@
     using System.Web.Mvc;
 
     using ShowFeed.Models;
+    using ShowFeed.Services;
     using ShowFeed.ViewModels;
 
     using WebMatrix.WebData;
@@ -19,12 +20,19 @@
         private readonly IDatabase database;
 
         /// <summary>
+        /// The TV show service.
+        /// </summary>
+        private readonly ITvShowService tvShowService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        public HomeController(IDatabase database)
+        /// <param name="tvShowService">The TV show service.</param>
+        public HomeController(IDatabase database, ITvShowService tvShowService)
         {
             this.database = database;
+            this.tvShowService = tvShowService;
         }
 
         /// <summary>
@@ -90,27 +98,16 @@
         {
             var model = new HomeSearchTvShowViewModel();
             model.ShowName = showName;
-            // TODO: model.Shows = ...;
-
-            model.Shows = new []
-            {
-                new HomeSearchTvShowViewModel.Show
+            model.Shows = this.tvShowService.Search(showName)
+                .Select(x => new HomeSearchTvShowViewModel.Show
                 {
-                    ShowId = 3333,
-                    Name = "Doctor Who (2005)",
-                    Description = string.Empty,
-                    Link = "...",
+                    ShowId = x.SourceId,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Link = x.SourceLink,
                     Following = false
-                },
-                new HomeSearchTvShowViewModel.Show
-                {
-                    ShowId = 3334,
-                    Name = "Doctor Who",
-                    Description = string.Empty,
-                    Link = "...",
-                    Following = true
-                },
-            };
+                })
+                .ToArray();
 
             return this.View(model);
         }

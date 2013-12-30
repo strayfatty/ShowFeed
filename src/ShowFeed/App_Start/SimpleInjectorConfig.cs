@@ -1,6 +1,8 @@
 ﻿namespace ShowFeed.App_Start
 {
     using ShowFeed.Models;
+    using ShowFeed.Services;
+    using ShowFeed.Services.TvRage;
 
     using SimpleInjector;
     using SimpleInjector.Integration.Web;
@@ -20,6 +22,7 @@
             container.RegisterMvcAttributeFilterProvider();
 
             container.Register<IDatabase, ShowFeedDatabase>(new WebRequestLifestyle());
+            container.Register<ITvShowService, TvRageFeedService>(new WebRequestLifestyle());
 
             container.Verify();
         }
