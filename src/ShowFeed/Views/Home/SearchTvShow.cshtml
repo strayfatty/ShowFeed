@@ -1,0 +1,74 @@
+﻿@model ShowFeed.ViewModels.HomeSearchTvShowViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h3>Search</h3>
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="input-group">
+        @Html.TextBoxFor(m => m.ShowName, new { @class = "form-control" })
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
+    </div>
+}
+
+<br />
+
+<table class="table table-striped table-bordered">
+    <tbody>
+        @foreach (var show in Model.Shows)
+        {
+            <tr>
+                <td><a href="@show.Link" target="_blank">@show.Name</a></td>
+                <td style="width: 3em">
+                    @if (show.Following)
+                    {
+                        <button type="button" class="btn btn-success btn-xs pull-right" disabled="disabled">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary btn-xs pull-right" data-showid="@show.ShowId">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">@show.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script type="text/javascript">
+        (function (window, undefined) {
+            $("body").on("click", ".btn-primary", function (event) {
+                var button = $(event.target).closest(".btn-primary");
+                button.attr("disabled", true);
+
+                $.ajax({
+                    type: "PUT",
+                    url: "@Url.HttpRouteUrl("api/tvshows", null)/" + button.data("showid"),
+                    success: function () {
+                        button.toggleClass("btn-primary btn-success");
+                        button.children(".glyphicon-plus").toggleClass("glyphicon-plus glyphicon-ok");
+                    },
+                    error: function () {
+                        button.attr("disabled", false);
+                    }
+                });
+            });
+        })(window);
+    </script>
+}

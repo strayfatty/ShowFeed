@@ -1,6 +1,7 @@
 ﻿namespace ShowFeed
 {
     using System.Web;
+    using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
@@ -22,13 +23,12 @@
         {
             AreaRegistration.RegisterAllAreas();
 
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            WebApiConfig.RegisterRoutes(GlobalConfiguration.Configuration.Routes);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DatabaseConfig.Initialize();
-
-            var container = new Container();
-            SimpleInjectorConfig.RegisterDependencies(container);
-            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
+            SimpleInjectorConfig.RegisterDependencies();
         }
     }
 }

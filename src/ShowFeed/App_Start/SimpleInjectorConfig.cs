@@ -1,9 +1,19 @@
 ﻿namespace ShowFeed.App_Start
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Web.Http;
+    using System.Web.Http.Dependencies;
+    using System.Web.Mvc;
+
     using ShowFeed.Models;
+    using ShowFeed.Services;
+    using ShowFeed.Services.TvRage;
 
     using SimpleInjector;
     using SimpleInjector.Integration.Web;
+    using SimpleInjector.Integration.Web.Mvc;
 
     /// <summary>
     /// The simple injector configuration class.
@@ -13,15 +23,81 @@
         /// <summary>
         /// Registers all dependencies with the simple injector.
         /// </summary>
-        /// <param name="container">The container.</param>
-        public static void RegisterDependencies(Container container)
+        public static void RegisterDependencies()
         {
+            var container = new Container();
+
             container.RegisterMvcControllers(typeof(SimpleInjectorConfig).Assembly);
             container.RegisterMvcAttributeFilterProvider();
 
             container.Register<IDatabase, ShowFeedDatabase>(new WebRequestLifestyle());
+            container.Register<ITvShowService, TvRageFeedService>(new WebRequestLifestyle());
 
             container.Verify();
+
+            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new WebApiDependencyResolver(container);
+        }
+
+        /// <summary>
+        /// The web API dependency resolver.
+        /// </summary>
+        public sealed class WebApiDependencyResolver : System.Web.Http.Dependencies.IDependencyResolver
+        {
+            /// <summary>
+            /// The DI container.
+            /// </summary>
+            private readonly Container container;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="WebApiDependencyResolver"/> class.
+            /// </summary>
+            /// <param name="container">The container.</param>
+            public WebApiDependencyResolver(Container container)
+            {
+                this.container = container;
+            }
+
+            /// <summary>
+            /// Starts a resolution scope.
+            /// </summary>
+            /// <returns>The dependency scope.</returns>
+            [DebuggerStepThrough]
+            public IDependencyScope BeginScope()
+            {
+                return this;
+            }
+
+            /// <summary>
+            /// Retrieves a service from the scope.
+            /// </summary>
+            /// <param name="serviceType">The service to be retrieved.</param>
+            /// <returns>The retrieved service.</returns>
+            [DebuggerStepThrough]
+            public object GetService(Type serviceType)
+            {
+                return ((IServiceProvider)this.container)
+                    .GetService(serviceType);
+            }
+
+            /// <summary>
+            /// Retrieves a collection of services from the scope.
+            /// </summary>
+            /// <param name="serviceType">The collection of services to be retrieved.</param>
+            /// <returns>The retrieved collection of services.</returns>
+            [DebuggerStepThrough]
+            public IEnumerable<object> GetServices(Type serviceType)
+            {
+                return this.container.GetAllInstances(serviceType);
+            }
+
+            /// <summary>
+            /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            /// </summary>
+            [DebuggerStepThrough]
+            public void Dispose()
+            {
+            }
         }
     }
 }
