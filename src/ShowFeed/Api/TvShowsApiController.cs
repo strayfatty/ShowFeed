@@ -52,5 +52,19 @@
             show.Followers.Add(this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName));
             this.database.SaveChanges();
         }
+
+        /// <summary>
+        /// Makes the current user no longer follow the show.
+        /// </summary>
+        /// <param name="id">The id of the show.</param>
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            var user = this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName);
+            var show = this.database.Load<TvShow>(id);
+
+            user.TvShowsFollowing.Remove(show);
+            this.database.SaveChanges();
+        }
     }
 }

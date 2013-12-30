@@ -57,35 +57,44 @@
             show.SourceImageLink = tvRageShow.Image;
             show.Name = tvRageShow.Name;
 
-            foreach (var tvRageSeason in tvRageShow.EpisodeList.Seasons)
+            if (tvRageShow.EpisodeList != null)
             {
-                foreach (var tvRageEpisode in tvRageSeason.Episodes)
+                if (tvRageShow.EpisodeList.Seasons != null)
                 {
-                    var episode = new TvEpisode();
-                    episode.SourceLink = tvRageEpisode.Link;
-                    episode.SourceImageLink = tvRageEpisode.Image;
-                    episode.Season = tvRageSeason.Number;
-                    episode.Index = tvRageEpisode.SeasonNumber;
-                    episode.Title = tvRageEpisode.Title;
-                    episode.Summary = null;
-                    episode.AirDate = tvRageEpisode.AirDate;
+                    foreach (var tvRageSeason in tvRageShow.EpisodeList.Seasons)
+                    {
+                        foreach (var tvRageEpisode in tvRageSeason.Episodes)
+                        {
+                            var episode = new TvEpisode();
+                            episode.SourceLink = tvRageEpisode.Link;
+                            episode.SourceImageLink = tvRageEpisode.Image;
+                            episode.Season = tvRageSeason.Number;
+                            episode.Index = tvRageEpisode.SeasonNumber;
+                            episode.Title = tvRageEpisode.Title;
+                            episode.Summary = null;
+                            episode.AirDate = tvRageEpisode.AirDate;
 
-                    show.Episodes.Add(episode);
+                            show.Episodes.Add(episode);
+                        }
+                    }
                 }
-            }
 
-            foreach (var tvRageEpisode in tvRageShow.EpisodeList.Specials)
-            {
-                var episode = new TvEpisode();
-                episode.SourceLink = tvRageEpisode.Link;
-                episode.SourceImageLink = tvRageEpisode.Image;
-                episode.Season = tvRageEpisode.Season;
-                episode.Index = 0;
-                episode.Title = tvRageEpisode.Title;
-                episode.Summary = null;
-                episode.AirDate = tvRageEpisode.AirDate;
+                if (tvRageShow.EpisodeList.Specials != null)
+                {
+                    foreach (var tvRageEpisode in tvRageShow.EpisodeList.Specials)
+                    {
+                        var episode = new TvEpisode();
+                        episode.SourceLink = tvRageEpisode.Link;
+                        episode.SourceImageLink = tvRageEpisode.Image;
+                        episode.Season = tvRageEpisode.Season;
+                        episode.Index = 0;
+                        episode.Title = tvRageEpisode.Title;
+                        episode.Summary = null;
+                        episode.AirDate = tvRageEpisode.AirDate;
 
-                show.Episodes.Add(episode);
+                        show.Episodes.Add(episode);
+                    }
+                }
             }
 
             return show;
