@@ -10,6 +10,15 @@
     public class TvShow : Entity
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TvShow"/> class.
+        /// </summary>
+        public TvShow()
+        {
+            this.Episodes = new List<TvEpisode>();
+            this.Followers = new List<User>();
+        }
+
+        /// <summary>
         /// Gets or sets the TVRage.com id for the show.
         /// </summary>
         public virtual int SourceId { get; set; }
