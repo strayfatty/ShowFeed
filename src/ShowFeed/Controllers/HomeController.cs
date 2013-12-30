@@ -96,6 +96,12 @@
         [HttpPost]
         public ActionResult SearchTvShow(string showName)
         {
+            var tvShowsFollowing = this.database.Query<User>()
+                .Where(x => x.Username == WebSecurity.CurrentUserName)
+                .SelectMany(x => x.TvShowsFollowing)
+                .Select(x => x.SourceId)
+                .ToArray();
+
             var model = new HomeSearchTvShowViewModel();
             model.ShowName = showName;
             model.Shows = this.tvShowService.Search(showName)
@@ -105,7 +111,7 @@
                     Name = x.Name,
                     Description = x.Description,
                     Link = x.SourceLink,
-                    Following = false
+                    Following = tvShowsFollowing.Contains(x.SourceId)
                 })
                 .ToArray();
 

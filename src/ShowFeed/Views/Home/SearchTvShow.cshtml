@@ -27,7 +27,7 @@
         @foreach (var show in Model.Shows.OrderBy(x => x.Name))
         {
             <tr>
-                <td><a href="@show.Link">@show.Name</a></td>
+                <td><a href="@show.Link" target="_blank">@show.Name</a></td>
                 <td style="width: 3em">
                     @if (show.Following)
                     {
