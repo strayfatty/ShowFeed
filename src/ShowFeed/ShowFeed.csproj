@@ -172,7 +172,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\TvShowsApiController.cs" />
+    <Compile Include="Api\SeriesApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

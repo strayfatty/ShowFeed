@@ -41,7 +41,7 @@
 
                 $.ajax({
                     type: "DELETE",
-                    url: "@Url.HttpRouteUrl("api/tvshows", null)/" + button.data("id"),
+                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("id"),
                     success: function () {
                         var row = button.closest("tr");
                         row.next().remove();

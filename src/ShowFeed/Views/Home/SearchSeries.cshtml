@@ -68,7 +68,7 @@
 
                 $.ajax({
                     type: "PUT",
-                    url: "@Url.HttpRouteUrl("api/tvshows", null)/" + button.data("showid"),
+                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("showid"),
                     success: function () {
                         button.toggleClass("btn-primary btn-success");
                         button.children(".glyphicon-plus").toggleClass("glyphicon-plus glyphicon-ok");
