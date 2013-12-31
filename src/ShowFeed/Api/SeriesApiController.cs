@@ -9,7 +9,7 @@
     using WebMatrix.WebData;
 
     /// <summary>
-    /// The TV shows API controller.
+    /// The series API controller.
     /// </summary>
     public class SeriesApiController : ApiController
     {

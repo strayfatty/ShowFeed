@@ -13,7 +13,7 @@
         /// <param name="routes">The route collection.</param>
         public static void RegisterRoutes(HttpRouteCollection routes)
         {
-            routes.MapHttpRoute("api/series", "api/series/{id}", new { controller = "SeriesApiController", id = RouteParameter.Optional });
+            routes.MapHttpRoute("api/series", "api/series/{id}", new { controller = "SeriesApi", id = RouteParameter.Optional });
         }
     }
 }

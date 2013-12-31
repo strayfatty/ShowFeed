@@ -46,7 +46,7 @@
                     }
                     else
                     {
-                        <button type="button" class="btn btn-primary btn-xs pull-right" data-showid="@series.SeriesId">
+                        <button type="button" class="btn btn-primary btn-xs pull-right" data-seriesid="@series.SeriesId">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     }
@@ -68,7 +68,7 @@
 
                 $.ajax({
                     type: "PUT",
-                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("showid"),
+                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("seriesid"),
                     success: function () {
                         button.toggleClass("btn-primary btn-success");
                         button.children(".glyphicon-plus").toggleClass("glyphicon-plus glyphicon-ok");
