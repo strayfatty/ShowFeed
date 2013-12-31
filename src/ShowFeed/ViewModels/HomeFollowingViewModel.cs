@@ -6,6 +6,14 @@
     public class HomeFollowingViewModel
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="HomeFollowingViewModel"/> class.
+        /// </summary>
+        public HomeFollowingViewModel()
+        {
+            this.Shows = new Show[0];
+        }
+
+        /// <summary>
         /// Gets or sets the shows.
         /// </summary>
         public Show[] Shows { get; set; }

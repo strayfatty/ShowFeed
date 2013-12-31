@@ -20,13 +20,13 @@
         public virtual string Email { get; set; }
 
         /// <summary>
-        /// Gets or sets the TV shows that the user follows.
+        /// Gets or sets the series that the user follows.
         /// </summary>
-        public virtual ICollection<TvShow> TvShowsFollowing { get; set; }
+        public virtual ICollection<Series> FollowedSeries { get; set; }
 
         /// <summary>
-        /// Gets or sets the TV episodes the user has viewed.
+        /// Gets or sets the episodes the user has viewed.
         /// </summary>
-        public virtual ICollection<TvEpisode> TvEpisodesViewed { get; set; }
+        public virtual ICollection<Episode> ViewedEpisodes { get; set; }
     }
 }

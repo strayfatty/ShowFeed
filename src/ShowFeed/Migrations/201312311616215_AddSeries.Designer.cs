@@ -7,13 +7,13 @@ namespace ShowFeed.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.2-21211")]
-    public sealed partial class AddTvShow : IMigrationMetadata
+    public sealed partial class AddSeries : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTvShow));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSeries));
         
         string IMigrationMetadata.Id
         {
-            get { return "201312291653587_AddTvShow"; }
+            get { return "201312311616215_AddSeries"; }
         }
         
         string IMigrationMetadata.Source

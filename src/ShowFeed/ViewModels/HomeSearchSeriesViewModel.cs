@@ -3,36 +3,41 @@
     /// <summary>
     /// The home following view model.
     /// </summary>
-    public class HomeSearchTvShowViewModel
+    public class HomeSearchSeriesViewModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeSearchTvShowViewModel"/> class.
+        /// Initializes a new instance of the <see cref="HomeSearchSeriesViewModel"/> class.
         /// </summary>
-        public HomeSearchTvShowViewModel()
+        public HomeSearchSeriesViewModel()
         {
-            this.ShowName = string.Empty;
-            this.Shows = new Show[0];
+            this.Query = string.Empty;
+            this.Result = new Series[0];
         }
 
         /// <summary>
         /// Gets or sets the show name.
         /// </summary>
-        public string ShowName { get; set; }
+        public string Query { get; set; }
 
         /// <summary>
         /// Gets or sets the shows.
         /// </summary>
-        public Show[] Shows { get; set; }
+        public Series[] Result { get; set; }
 
         /// <summary>
         /// The show.
         /// </summary>
-        public class Show
+        public class Series
         {
             /// <summary>
-            /// Gets or sets the show id.
+            /// Gets or sets the series id.
             /// </summary>
-            public int ShowId { get; set; }
+            public int SeriesId { get; set; }
+
+            /// <summary>
+            /// Gets or sets the IMDB id.
+            /// </summary>
+            public string ImdbId { get; set; }
 
             /// <summary>
             /// Gets or sets the name.
@@ -43,11 +48,6 @@
             /// Gets or sets the description.
             /// </summary>
             public string Description { get; set; }
-
-            /// <summary>
-            /// Gets or sets the link.
-            /// </summary>
-            public string Link { get; set; }
 
             /// <summary>
             /// Gets or sets a value indicating whether the user is 

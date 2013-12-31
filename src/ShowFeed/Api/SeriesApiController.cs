@@ -9,9 +9,9 @@
     using WebMatrix.WebData;
 
     /// <summary>
-    /// The TV shows API controller.
+    /// The series API controller.
     /// </summary>
-    public class TvShowsApiController : ApiController
+    public class SeriesApiController : ApiController
     {
         /// <summary>
         /// The database.
@@ -19,19 +19,19 @@
         private readonly IDatabase database;
 
         /// <summary>
-        /// The TV show service.
+        /// The series service.
         /// </summary>
-        private readonly ITvShowService tvShowService;
+        private readonly ISeriesService seriesService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TvShowsApiController"/> class.
+        /// Initializes a new instance of the <see cref="SeriesApiController"/> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        /// <param name="tvShowService">The TV Show Service.</param>
-        public TvShowsApiController(IDatabase database, ITvShowService tvShowService)
+        /// <param name="seriesService">The series service.</param>
+        public SeriesApiController(IDatabase database, ISeriesService seriesService)
         {
             this.database = database;
-            this.tvShowService = tvShowService;
+            this.seriesService = seriesService;
         }
 
         /// <summary>
@@ -42,10 +42,10 @@
         [HttpPut]
         public void Put(int id)
         {
-            var show = this.database.Query<TvShow>().FirstOrDefault(x => x.SourceId == id);
+            var show = this.database.Query<Series>().FirstOrDefault(x => x.SeriesId == id);
             if (object.ReferenceEquals(show, null))
             {
-                show = this.tvShowService.GetDetails(id);
+                show = this.seriesService.GetDetails(id);
                 this.database.Store(show);
             }
 
@@ -61,9 +61,9 @@
         public void Delete(int id)
         {
             var user = this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName);
-            var show = this.database.Load<TvShow>(id);
+            var show = this.database.Load<Series>(id);
 
-            user.TvShowsFollowing.Remove(show);
+            user.FollowedSeries.Remove(show);
             this.database.SaveChanges();
         }
     }
