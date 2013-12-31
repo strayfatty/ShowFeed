@@ -1,11 +1,13 @@
 ﻿namespace ShowFeed.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The series.
     /// </summary>
-    public class Series ////: Entity
+    [Table("Series")]
+    public class Series : Entity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Series"/> class.

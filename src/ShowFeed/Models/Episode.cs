@@ -2,17 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The episode.
     /// </summary>
-    public class Episode ////: Entity
+    [Table("Episode")]
+    public class Episode : Entity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Episode"/> class.
         /// </summary>
         public Episode()
         {
+            this.Viewers = new List<User>();
         }
 
         /// <summary>
