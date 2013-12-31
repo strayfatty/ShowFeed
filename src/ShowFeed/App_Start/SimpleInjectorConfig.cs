@@ -9,7 +9,7 @@
 
     using ShowFeed.Models;
     using ShowFeed.Services;
-    using ShowFeed.Services.TvRage;
+    using ShowFeed.Services.TheTvDb;
 
     using SimpleInjector;
     using SimpleInjector.Integration.Web;
@@ -31,7 +31,7 @@
             container.RegisterMvcAttributeFilterProvider();
 
             container.Register<IDatabase, ShowFeedDatabase>(new WebRequestLifestyle());
-            container.Register<ITvShowService, TvRageFeedService>(new WebRequestLifestyle());
+            container.Register<ISeriesService, TheTvDbSeriesService>(new WebRequestLifestyle());
 
             container.Verify();
 

@@ -19,19 +19,19 @@
         private readonly IDatabase database;
 
         /// <summary>
-        /// The TV show service.
+        /// The series service.
         /// </summary>
-        private readonly ITvShowService tvShowService;
+        private readonly ISeriesService seriesService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TvShowsApiController"/> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        /// <param name="tvShowService">The TV Show Service.</param>
-        public TvShowsApiController(IDatabase database, ITvShowService tvShowService)
+        /// <param name="seriesService">The series service.</param>
+        public TvShowsApiController(IDatabase database, ISeriesService seriesService)
         {
             this.database = database;
-            this.tvShowService = tvShowService;
+            this.seriesService = seriesService;
         }
 
         /// <summary>
@@ -42,15 +42,15 @@
         [HttpPut]
         public void Put(int id)
         {
-            var show = this.database.Query<TvShow>().FirstOrDefault(x => x.SourceId == id);
-            if (object.ReferenceEquals(show, null))
-            {
-                show = this.tvShowService.GetDetails(id);
-                this.database.Store(show);
-            }
+            ////var show = this.database.Query<Series>().FirstOrDefault(x => x.SeriesId == id);
+            ////if (object.ReferenceEquals(show, null))
+            ////{
+            ////    show = this.seriesService.GetDetails(id);
+            ////    this.database.Store(show);
+            ////}
 
-            show.Followers.Add(this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName));
-            this.database.SaveChanges();
+            ////show.Followers.Add(this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName));
+            ////this.database.SaveChanges();
         }
 
         /// <summary>
@@ -60,11 +60,11 @@
         [HttpDelete]
         public void Delete(int id)
         {
-            var user = this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName);
-            var show = this.database.Load<TvShow>(id);
+            ////var user = this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName);
+            ////var show = this.database.Load<Series>(id);
 
-            user.TvShowsFollowing.Remove(show);
-            this.database.SaveChanges();
+            ////user.FollowedSeries.Remove(show);
+            ////this.database.SaveChanges();
         }
     }
 }

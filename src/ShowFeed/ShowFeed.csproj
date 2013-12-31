@@ -187,26 +187,18 @@
     <Compile Include="Migrations\201312261448321_AddUser.Designer.cs">
       <DependentUpon>201312261448321_AddUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201312291653587_AddTvShow.cs" />
-    <Compile Include="Migrations\201312291653587_AddTvShow.Designer.cs">
-      <DependentUpon>201312291653587_AddTvShow.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\IDatabase.cs" />
-    <Compile Include="Services\ITvShowService.cs" />
+    <Compile Include="Models\Series.cs" />
+    <Compile Include="Services\ISeriesService.cs" />
     <Compile Include="Models\ShowFeedDatabase.cs" />
-    <Compile Include="Models\TvEpisode.cs" />
-    <Compile Include="Models\TvShow.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\TvRage\TvRageEpisode.cs" />
-    <Compile Include="Services\TvRage\TvRageEpisodeList.cs" />
-    <Compile Include="Services\TvRage\TvRageFeedService.cs" />
-    <Compile Include="Services\TvRage\TvRageSearchResult.cs" />
-    <Compile Include="Services\TvRage\TvRageSearchResults.cs" />
-    <Compile Include="Services\TvRage\TvRageSeason.cs" />
-    <Compile Include="Services\TvRage\TvRageShow.cs" />
+    <Compile Include="Services\TheTvDb\TheTvDbSearchResult.cs" />
+    <Compile Include="Services\TheTvDb\TheTvDbSearchResults.cs" />
+    <Compile Include="Services\TheTvDb\TheTvDbSeriesService.cs" />
     <Compile Include="ViewModels\AccountSignUpViewModel.cs" />
     <Compile Include="ViewModels\AccountLogInViewModel.cs" />
     <Compile Include="ViewModels\HomeSearchTvShowViewModel.cs" />
@@ -241,9 +233,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201312261448321_AddUser.resx">
       <DependentUpon>201312261448321_AddUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312291653587_AddTvShow.resx">
-      <DependentUpon>201312291653587_AddTvShow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

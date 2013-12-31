@@ -20,19 +20,19 @@
         private readonly IDatabase database;
 
         /// <summary>
-        /// The TV show service.
+        /// The series service.
         /// </summary>
-        private readonly ITvShowService tvShowService;
+        private readonly ISeriesService seriesService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        /// <param name="tvShowService">The TV show service.</param>
-        public HomeController(IDatabase database, ITvShowService tvShowService)
+        /// <param name="seriesService">The series service.</param>
+        public HomeController(IDatabase database, ISeriesService seriesService)
         {
             this.database = database;
-            this.tvShowService = tvShowService;
+            this.seriesService = seriesService;
         }
 
         /// <summary>
@@ -65,15 +65,15 @@
         public ActionResult Following()
         {
             var model = new HomeFollowingViewModel();
-            model.Shows = this.database.Query<TvShow>()
-                .Where(x => x.Followers.Any(y => y.Username == WebSecurity.CurrentUserName))
-                .Select(x => new HomeFollowingViewModel.Show
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Description = x.Description,
-                    })
-                .ToArray();
+            ////model.Shows = this.database.Query<TvShow>()
+            ////    .Where(x => x.Followers.Any(y => y.Username == WebSecurity.CurrentUserName))
+            ////    .Select(x => new HomeFollowingViewModel.Show
+            ////        {
+            ////            Id = x.Id,
+            ////            Name = x.Name,
+            ////            Description = x.Description,
+            ////        })
+            ////    .ToArray();
 
             return this.View(model);
         }
@@ -96,26 +96,26 @@
         [HttpPost]
         public ActionResult SearchTvShow(string showName)
         {
-            var tvShowsFollowing = this.database.Query<User>()
-                .Where(x => x.Username == WebSecurity.CurrentUserName)
-                .SelectMany(x => x.TvShowsFollowing)
-                .Select(x => x.SourceId)
-                .ToArray();
+            ////var followedSeries = this.database.Query<User>()
+            ////    .Where(x => x.Username == WebSecurity.CurrentUserName)
+            ////    .SelectMany(x => x.FollowedSeries)
+            ////    .Select(x => x.SeriesId)
+            ////    .ToArray();
 
-            var model = new HomeSearchTvShowViewModel();
-            model.ShowName = showName;
-            model.Shows = this.tvShowService.Search(showName)
-                .Select(x => new HomeSearchTvShowViewModel.Show
-                {
-                    ShowId = x.SourceId,
-                    Name = x.Name,
-                    Description = x.Description,
-                    Link = x.SourceLink,
-                    Following = tvShowsFollowing.Contains(x.SourceId)
-                })
-                .ToArray();
+            ////var model = new HomeSearchTvShowViewModel();
+            ////model.ShowName = showName;
+            ////model.Shows = this.seriesService.Search(showName)
+            ////    .Select(x => new HomeSearchTvShowViewModel.Show
+            ////    {
+            ////        ShowId = x.SeriesId,
+            ////        Name = x.Name,
+            ////        Description = x.Description,
+            ////        Following = tvShowsFollowing.Contains(x.SeriesId)
+            ////    })
+            ////    .ToArray();
 
-            return this.View(model);
+            ////return this.View(model);
+            return this.View(new HomeSearchTvShowViewModel());
         }
     }
 }
