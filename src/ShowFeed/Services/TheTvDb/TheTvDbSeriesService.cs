@@ -25,6 +25,11 @@
             var address = string.Format(BaseAddress, series);
             var result = DownloadXml<TheTvDbSearchResults>(address);
 
+            if (result.Series == null)
+            {
+                return new Series[0];
+            }
+
             return result.Series.Select(
                 x => new Series
                 {
