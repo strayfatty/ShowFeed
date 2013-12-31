@@ -1,5 +1,6 @@
 ﻿namespace ShowFeed.Api
 {
+    using System.Data.Entity;
     using System.Linq;
     using System.Web.Http;
 
@@ -42,15 +43,38 @@
         [HttpPut]
         public void Put(int id)
         {
-            ////var show = this.database.Query<Series>().FirstOrDefault(x => x.SeriesId == id);
-            ////if (object.ReferenceEquals(show, null))
-            ////{
-            ////    show = this.seriesService.GetDetails(id);
-            ////    this.database.Store(show);
-            ////}
+            var watch1 = new System.Diagnostics.Stopwatch();
+            var watch2 = new System.Diagnostics.Stopwatch();
+            var watch3 = new System.Diagnostics.Stopwatch();
+            watch2.Start();
 
-            ////show.Followers.Add(this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName));
-            ////this.database.SaveChanges();
+            var show = this.database.Query<Series>().FirstOrDefault(x => x.SeriesId == id);
+            if (object.ReferenceEquals(show, null))
+            {
+                var dbContext = this.database as DbContext;
+                if (dbContext != null)
+                {
+                    dbContext.Configuration.AutoDetectChangesEnabled = false;
+                    dbContext.Configuration.ValidateOnSaveEnabled = false;
+                }
+
+                watch1.Start();
+                show = this.seriesService.GetDetails(id);
+                watch1.Stop();
+
+                this.database.Store(show);
+            }
+
+            show.Followers.Add(this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName));
+
+            watch3.Start();
+            this.database.SaveChanges();
+            watch3.Stop();
+
+            watch2.Stop();
+            var elapsed1 = watch1.Elapsed;
+            var elapsed2 = watch2.Elapsed;
+            var elapsed3 = watch3.Elapsed;
         }
 
         /// <summary>
@@ -60,11 +84,11 @@
         [HttpDelete]
         public void Delete(int id)
         {
-            ////var user = this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName);
-            ////var show = this.database.Load<Series>(id);
+            var user = this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName);
+            var show = this.database.Load<Series>(id);
 
-            ////user.FollowedSeries.Remove(show);
-            ////this.database.SaveChanges();
+            user.FollowedSeries.Remove(show);
+            this.database.SaveChanges();
         }
     }
 }
