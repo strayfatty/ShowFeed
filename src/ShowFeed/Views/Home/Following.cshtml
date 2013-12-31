@@ -8,7 +8,7 @@
     <h3>Following</h3>
 </div>
 
-<a class="btn btn-primary btn-sm" href="@Url.RouteUrl("searchseries")">Add show</a>
+<a class="btn btn-primary btn-sm" href="@Url.RouteUrl("searchseries")">Add series</a>
 
 <br />
 <br />
@@ -18,8 +18,8 @@
         @foreach (var show in Model.Shows.OrderBy(x => x.Name))
         {
             <tr>
-                <td>@show.Name</td>
-                <td style="width: 3em">
+                <td>
+                    @show.Name
                     <button type="button" class="btn btn-danger btn-xs pull-right" data-id="@show.Id">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
