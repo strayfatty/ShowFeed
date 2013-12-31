@@ -23,7 +23,7 @@
             routes.MapRoute("home", string.Empty, new { controller = "Home", action = "Index" });
             routes.MapRoute("upcoming", "upcoming", new { controller = "Home", action = "Upcoming" });
             routes.MapRoute("following", "following", new { controller = "Home", action = "Following" });
-            routes.MapRoute("searchtvshow", "searchtvshow", new { controller = "Home", action = "SearchTvShow" });
+            routes.MapRoute("searchseries", "searchseries", new { controller = "Home", action = "SearchSeries" });
         }
     }
 }

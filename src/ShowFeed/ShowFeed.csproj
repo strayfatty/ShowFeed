@@ -205,7 +205,7 @@
     <Compile Include="Services\TheTvDb\TheTvDbSeriesService.cs" />
     <Compile Include="ViewModels\AccountSignUpViewModel.cs" />
     <Compile Include="ViewModels\AccountLogInViewModel.cs" />
-    <Compile Include="ViewModels\HomeSearchTvShowViewModel.cs" />
+    <Compile Include="ViewModels\HomeSearchSeriesViewModel.cs" />
     <Compile Include="ViewModels\HomeFollowingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,7 +223,7 @@
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\Home\Upcoming.cshtml" />
     <Content Include="Views\Home\Following.cshtml" />
-    <Content Include="Views\Home\SearchTvShow.cshtml" />
+    <Content Include="Views\Home\SearchSeries.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

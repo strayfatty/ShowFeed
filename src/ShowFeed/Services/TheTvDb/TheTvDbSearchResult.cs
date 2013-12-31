@@ -17,6 +17,12 @@
         public int SeriesId { get; set; }
 
         /// <summary>
+        /// Gets or sets the IMDB id.
+        /// </summary>
+        [XmlElement("IMDB_ID")]
+        public string ImdbId { get; set; }
+
+        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         [XmlElement("SeriesName")]

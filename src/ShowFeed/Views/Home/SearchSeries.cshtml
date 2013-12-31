@@ -1,4 +1,4 @@
-﻿@model ShowFeed.ViewModels.HomeSearchTvShowViewModel
+﻿@model ShowFeed.ViewModels.HomeSearchSeriesViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
     <div class="input-group">
-        @Html.TextBoxFor(m => m.ShowName, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Query, new { @class = "form-control" })
         <span class="input-group-btn">
             <button type="submit" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span>
@@ -24,12 +24,21 @@
 
 <table class="table table-striped table-bordered">
     <tbody>
-        @foreach (var show in Model.Shows)
+        @foreach (var series in Model.Result.OrderBy(x => x.Name))
         {
             <tr>
-                <td><a href="@show.Link" target="_blank">@show.Name</a></td>
+                <td>
+                    @if (!string.IsNullOrEmpty(series.ImdbId))
+                    {
+                        <a href="@("http://www.imdb.com/title/" + series.ImdbId)" target="_blank">@series.Name</a>
+                    }
+                    else
+                    {
+                        <text>@series.Name</text>
+                    }
+                </td>
                 <td style="width: 3em">
-                    @if (show.Following)
+                    @if (series.Following)
                     {
                         <button type="button" class="btn btn-success btn-xs pull-right" disabled="disabled">
                             <span class="glyphicon glyphicon-ok"></span>
@@ -37,14 +46,14 @@
                     }
                     else
                     {
-                        <button type="button" class="btn btn-primary btn-xs pull-right" data-showid="@show.ShowId">
+                        <button type="button" class="btn btn-primary btn-xs pull-right" data-showid="@series.SeriesId">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     }
                 </td>
             </tr>
             <tr>
-                <td colspan="2">@show.Description</td>
+                <td colspan="2">@series.Description</td>
             </tr>
         }
     </tbody>

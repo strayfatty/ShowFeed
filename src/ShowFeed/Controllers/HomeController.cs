@@ -65,15 +65,15 @@
         public ActionResult Following()
         {
             var model = new HomeFollowingViewModel();
-            ////model.Shows = this.database.Query<TvShow>()
-            ////    .Where(x => x.Followers.Any(y => y.Username == WebSecurity.CurrentUserName))
-            ////    .Select(x => new HomeFollowingViewModel.Show
-            ////        {
-            ////            Id = x.Id,
-            ////            Name = x.Name,
-            ////            Description = x.Description,
-            ////        })
-            ////    .ToArray();
+            model.Shows = this.database.Query<Series>()
+                .Where(x => x.Followers.Any(y => y.Username == WebSecurity.CurrentUserName))
+                .Select(x => new HomeFollowingViewModel.Show
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Description = x.Description,
+                    })
+                .ToArray();
 
             return this.View(model);
         }
@@ -83,39 +83,39 @@
         /// </summary>
         /// <returns>An action result.</returns>
         [HttpGet]
-        public ActionResult SearchTvShow()
+        public ActionResult SearchSeries()
         {
-            return this.View(new HomeSearchTvShowViewModel());
+            return this.View(new HomeSearchSeriesViewModel());
         }
 
         /// <summary>
         /// The search TV show action.
         /// </summary>
-        /// <param name="showName">The show name.</param>
+        /// <param name="query">The query.</param>
         /// <returns>An action result.</returns>
         [HttpPost]
-        public ActionResult SearchTvShow(string showName)
+        public ActionResult SearchSeries(string query)
         {
-            ////var followedSeries = this.database.Query<User>()
-            ////    .Where(x => x.Username == WebSecurity.CurrentUserName)
-            ////    .SelectMany(x => x.FollowedSeries)
-            ////    .Select(x => x.SeriesId)
-            ////    .ToArray();
+            var followedSeries = this.database.Query<User>()
+                .Where(x => x.Username == WebSecurity.CurrentUserName)
+                .SelectMany(x => x.FollowedSeries)
+                .Select(x => x.SeriesId)
+                .ToArray();
 
-            ////var model = new HomeSearchTvShowViewModel();
-            ////model.ShowName = showName;
-            ////model.Shows = this.seriesService.Search(showName)
-            ////    .Select(x => new HomeSearchTvShowViewModel.Show
-            ////    {
-            ////        ShowId = x.SeriesId,
-            ////        Name = x.Name,
-            ////        Description = x.Description,
-            ////        Following = tvShowsFollowing.Contains(x.SeriesId)
-            ////    })
-            ////    .ToArray();
+            var model = new HomeSearchSeriesViewModel();
+            model.Query = query;
+            model.Result = this.seriesService.Search(query)
+                .Select(x => new HomeSearchSeriesViewModel.Series
+                {
+                    SeriesId = x.SeriesId,
+                    ImdbId = x.ImdbId,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Following = followedSeries.Contains(x.SeriesId)
+                })
+                .ToArray();
 
-            ////return this.View(model);
-            return this.View(new HomeSearchTvShowViewModel());
+            return this.View(model);
         }
     }
 }

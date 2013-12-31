@@ -29,6 +29,7 @@
                 x => new Series
                 {
                     SeriesId = x.SeriesId,
+                    ImdbId = x.ImdbId,
                     Name = x.Name,
                     Description = x.Description,
                 });
