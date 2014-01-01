@@ -7,6 +7,8 @@
     using System.Web.Optimization;
     using System.Web.Routing;
 
+    using Newtonsoft.Json.Serialization;
+
     using ShowFeed.App_Start;
 
     using SimpleInjector;
@@ -36,6 +38,9 @@
             SimpleInjectorConfig.RegisterDependencies();
 
             MiniProfilerConfig.PostApplicationStartInitialization();
+
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
 
         /// <summary>

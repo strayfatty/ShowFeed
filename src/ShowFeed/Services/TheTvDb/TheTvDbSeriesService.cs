@@ -66,7 +66,6 @@
 
                 using (MiniProfiler.Current.Step("map"))
                 {
-
                     var series = new Series();
                     series.SeriesId = result.Series.Id;
                     series.ImdbId = result.Series.ImdbId;
