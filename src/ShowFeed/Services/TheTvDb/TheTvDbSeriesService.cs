@@ -11,6 +11,8 @@
 
     using ShowFeed.Models;
 
+    using StackExchange.Profiling;
+
     /// <summary>
     /// The <c>TheTVDB</c> series service.
     /// </summary>
@@ -23,23 +25,29 @@
         /// <returns>A list of <see cref="Series"/>.</returns>
         public IEnumerable<Series> Search(string series)
         {
-            const string BaseAddress = "http://thetvdb.com/api/GetSeries.php?seriesname={0}&language=en";
-            var address = string.Format(BaseAddress, series);
-            var result = DownloadXml<TheTvDbSearchResults>(address);
-
-            if (result.Series == null)
+            using (MiniProfiler.Current.Step("search series"))
             {
-                return new Series[0];
-            }
+                const string BaseAddress = "http://thetvdb.com/api/GetSeries.php?seriesname={0}&language=en";
+                var address = string.Format(BaseAddress, series);
+                var result = DownloadXml<TheTvDbSearchResults>(address);
 
-            return result.Series.Select(
-                x => new Series
+                using (MiniProfiler.Current.Step("map"))
                 {
-                    SeriesId = x.SeriesId,
-                    ImdbId = x.ImdbId,
-                    Name = x.Name,
-                    Description = x.Description,
-                });
+                    if (result.Series == null)
+                    {
+                        return new Series[0];
+                    }
+
+                    return result.Series.Select(
+                        x => new Series
+                        {
+                            SeriesId = x.SeriesId,
+                            ImdbId = x.ImdbId,
+                            Name = x.Name,
+                            Description = x.Description,
+                        });
+                }
+            }
         }
 
         /// <summary>
@@ -49,37 +57,44 @@
         /// <returns>The <see cref="Series"/>.</returns>
         public Series GetDetails(int seriesId)
         {
-            const string BaseAddress = "http://thetvdb.com/api/{0}/series/{1}/all/en.zip";
-            var address = string.Format(BaseAddress, ConfigurationManager.AppSettings["TheTVDB.ApiKey"], seriesId);
-
-            var result = DownloadZip<TheTvDbSeriesDetails>(address, "en.xml");
-
-            var series = new Series();
-            series.SeriesId = result.Series.Id;
-            series.ImdbId = result.Series.ImdbId;
-            series.Name = result.Series.Name;
-            series.Description = result.Series.Description;
-            series.BannerLink = result.Series.BannerLink;
-            series.FanArtLink = result.Series.FanArtLink;
-            series.PosterLink = result.Series.PosterLink;
-
-            if (result.Episodes != null)
+            using (MiniProfiler.Current.Step("get details"))
             {
-                series.Episodes = result.Episodes.Select(
-                    x => new Episode
-                        {
-                            EpisodeId = x.Id,
-                            SeasonNumber = x.SeasonNumber,
-                            EpisodeNumber = x.EpisodeNumber,
-                            Name = x.Name,
-                            Description = x.Description,
-                            FirstAired = x.FirstAired,
-                            ImageLink = x.ImageLink
-                        })
-                    .ToList();
-            }
+                const string BaseAddress = "http://thetvdb.com/api/{0}/series/{1}/all/en.zip";
+                var address = string.Format(BaseAddress, ConfigurationManager.AppSettings["TheTVDB.ApiKey"], seriesId);
 
-            return series;
+                var result = DownloadZip<TheTvDbSeriesDetails>(address, "en.xml");
+
+                using (MiniProfiler.Current.Step("map"))
+                {
+
+                    var series = new Series();
+                    series.SeriesId = result.Series.Id;
+                    series.ImdbId = result.Series.ImdbId;
+                    series.Name = result.Series.Name;
+                    series.Description = result.Series.Description;
+                    series.BannerLink = result.Series.BannerLink;
+                    series.FanArtLink = result.Series.FanArtLink;
+                    series.PosterLink = result.Series.PosterLink;
+
+                    if (result.Episodes != null)
+                    {
+                        series.Episodes = result.Episodes.Select(
+                            x => new Episode
+                                {
+                                    EpisodeId = x.Id,
+                                    SeasonNumber = x.SeasonNumber,
+                                    EpisodeNumber = x.EpisodeNumber,
+                                    Name = x.Name,
+                                    Description = x.Description,
+                                    FirstAired = x.FirstAired,
+                                    ImageLink = x.ImageLink
+                                })
+                            .ToList();
+                    }
+
+                    return series;
+                }
+            }
         }
 
         /// <summary>
@@ -92,9 +107,15 @@
         {
             var webClient = new WebClient();
             webClient.Encoding = System.Text.Encoding.UTF8;
-            var response = webClient.DownloadString(address);
+
+            string response;
+            using (MiniProfiler.Current.Step("download"))
+            {
+                response = webClient.DownloadString(address);
+            }
 
             var serializer = new XmlSerializer(typeof(T));
+            using (MiniProfiler.Current.Step("deserialize"))
             using (var reader = new StringReader(response))
             {
                 return (T)serializer.Deserialize(reader);
@@ -113,11 +134,13 @@
             var webClient = new WebClient();
             webClient.Encoding = System.Text.Encoding.UTF8;
 
+            using (MiniProfiler.Current.Step("download"))
             using (var fileStream = webClient.OpenRead(address))
             using (var zipArchive = new ZipArchive(fileStream))
             {
                 var zipEntry = zipArchive.Entries.First(x => x.Name == filename);
                 using (var entryStream = zipEntry.Open())
+                using (MiniProfiler.Current.Step("deserialize"))
                 {
                     var serializer = new XmlSerializer(typeof(T));
                     return (T)serializer.Deserialize(entryStream);
