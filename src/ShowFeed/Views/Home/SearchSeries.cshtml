@@ -30,7 +30,7 @@
                 <td>
                     @if (!string.IsNullOrEmpty(series.ImdbId))
                     {
-                        <a href="@("http://www.imdb.com/title/" + series.ImdbId)" target="_blank">@series.Name</a>
+                        <a class="act act-primary" href="@("http://www.imdb.com/title/" + series.ImdbId)" target="_blank">@series.Name</a>
                     }
                     else
                     {
