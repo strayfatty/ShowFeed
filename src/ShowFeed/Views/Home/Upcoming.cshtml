@@ -25,8 +25,9 @@
     <script type="text/javascript">
         var options = {
             view: 'month',
+            first_day: 1,
             tmpl_path: 'Content/tmpls/',
-            events_source: 'api/upcoming',
+            events_source: 'api/calendar',
 
             onAfterViewLoad: function (view) {
                 $('.page-header h3').text(this.getTitle());

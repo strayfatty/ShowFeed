@@ -179,6 +179,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\CalendarApiController.cs" />
+    <Compile Include="Api\Model\CalendarEntry.cs" />
+    <Compile Include="Api\Model\CalendarQuery.cs" />
+    <Compile Include="Api\Model\CalendarQueryResult.cs" />
     <Compile Include="Api\SeriesApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DatabaseConfig.cs" />
