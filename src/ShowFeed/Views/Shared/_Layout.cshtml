@@ -19,7 +19,7 @@
                     </ul>
                     <ul class="nav bs-sidenav">
                         <li>
-                            <a href="@Url.RouteUrl("upcoming")"><span class="glyphicon glyphicon-calendar"></span> Upcoming</a>
+                            <a href="@Url.RouteUrl("calendar")"><span class="glyphicon glyphicon-calendar"></span> Calendar</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -27,7 +27,7 @@
                                 <a href="#"><span class="glyphicon glyphicon-tasks"></span> Watch Later</a>
                             </li>
                             <li>
-                                <a href="#"><span class="glyphicon glyphicon-film"></span> Subscriptions</a>
+                                <a href="@Url.RouteUrl("following")"><span class="glyphicon glyphicon-film"></span> Following</a>
                             </li>
                         }
                     </ul>
@@ -59,5 +59,6 @@
     </div>
     @Scripts.Render("~/Scripts/js")
     @RenderSection("scripts", false)
+    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
 </body>
 </html>

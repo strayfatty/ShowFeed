@@ -15,6 +15,7 @@
         {
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
+                "~/Content/bootstrap-actionlinks.css",
                 "~/Content/bs-sidebar.css",
                 "~/Content/calendar.css"));
 

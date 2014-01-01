@@ -1,0 +1,57 @@
+﻿@model ShowFeed.ViewModels.HomeFollowingViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h3>Following</h3>
+</div>
+
+<a class="btn btn-primary btn-sm" href="@Url.RouteUrl("searchseries")">Add series</a>
+
+<br />
+<br />
+
+<table class="table table-bordered table-striped">
+    <tbody>
+        @foreach (var show in Model.Shows.OrderBy(x => x.Name))
+        {
+            <tr>
+                <td>
+                    @show.Name
+                    <button type="button" class="btn btn-danger btn-xs pull-right" data-id="@show.Id">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">@show.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script type="text/javascript">
+        (function (window, undefined) {
+            $("body").on("click", ".btn-danger", function (event) {
+                var button = $(event.target).closest(".btn-danger");
+                button.attr("disabled", true);
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("id"),
+                    success: function () {
+                        var row = button.closest("tr");
+                        row.next().remove();
+                        row.remove();
+                    },
+                    error: function () {
+                        button.attr("disabled", false);
+                    }
+                });
+            });
+        })(window);
+    </script>
+}
