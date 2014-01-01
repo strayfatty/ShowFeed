@@ -52,7 +52,7 @@
         /// <returns>An action result.</returns>
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Upcoming()
+        public ActionResult Calendar()
         {
             return this.View();
         }

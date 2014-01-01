@@ -237,7 +237,7 @@
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
-    <Content Include="Views\Home\Upcoming.cshtml" />
+    <Content Include="Views\Home\Calendar.cshtml" />
     <Content Include="Views\Home\Following.cshtml" />
     <Content Include="Views\Home\SearchSeries.cshtml" />
     <None Include="Web.Debug.config">
