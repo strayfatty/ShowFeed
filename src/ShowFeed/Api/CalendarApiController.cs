@@ -34,16 +34,23 @@
         /// <param name="query">The query.</param>
         /// <returns>The <see cref="CalendarQueryResult"/>.</returns>
         [HttpGet]
+        [AllowAnonymous]
         public CalendarQueryResult Get([FromUri]CalendarQuery query)
         {
-            var result = new CalendarQueryResult();
-            result.Success = 1;
-
-            result.Result = this.database.Query<Episode>()
+            var username = WebSecurity.CurrentUserName;
+            var databaseQuery = this.database.Query<Episode>()
                 .Where(x => x.FirstAired.HasValue
                     && x.FirstAired.Value >= query.FromDate
-                    && x.FirstAired.Value <= query.ToDate)
-                .Select(x => new CalendarEntry
+                    && x.FirstAired.Value <= query.ToDate);
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                databaseQuery = databaseQuery.Where(x => x.Series.Followers.Any(y => y.Username == username));
+            }
+
+            var result = new CalendarQueryResult();
+            result.Success = 1;
+            result.Result = databaseQuery.Select(x => new CalendarEntry
                     {
                         Id = x.Id,
                         Title = x.Series.Name + " - " + x.Name,
