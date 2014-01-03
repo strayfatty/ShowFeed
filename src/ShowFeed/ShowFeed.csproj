@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201312311616215_AddSeries.Designer.cs">
       <DependentUpon>201312311616215_AddSeries.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401031832155_AddMaxLength.cs" />
+    <Compile Include="Migrations\201401031832155_AddMaxLength.Designer.cs">
+      <DependentUpon>201401031832155_AddMaxLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Episode.cs" />
@@ -263,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312311616215_AddSeries.resx">
       <DependentUpon>201312311616215_AddSeries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401031832155_AddMaxLength.resx">
+      <DependentUpon>201401031832155_AddMaxLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
