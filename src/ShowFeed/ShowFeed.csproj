@@ -50,8 +50,15 @@
       <HintPath>..\..\lib\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MiniProfiler">
-      <HintPath>..\..\lib\MiniProfiler.2.0.2\lib\net40\MiniProfiler.dll</HintPath>
+    <Reference Include="MiniProfiler, Version=2.0.2.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\MiniProfiler3\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler.EntityFramework6">
+      <HintPath>..\..\lib\MiniProfiler3\MiniProfiler.EntityFramework6.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler.Mvc">
+      <HintPath>..\..\lib\MiniProfiler3\MiniProfiler.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -204,6 +211,10 @@
     <Compile Include="Migrations\201312311616215_AddSeries.Designer.cs">
       <DependentUpon>201312311616215_AddSeries.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401031832155_AddMaxLength.cs" />
+    <Compile Include="Migrations\201401031832155_AddMaxLength.Designer.cs">
+      <DependentUpon>201401031832155_AddMaxLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Episode.cs" />
@@ -256,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312311616215_AddSeries.resx">
       <DependentUpon>201312311616215_AddSeries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401031832155_AddMaxLength.resx">
+      <DependentUpon>201401031832155_AddMaxLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,7 @@
 ﻿namespace ShowFeed.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
@@ -26,11 +27,13 @@
         /// <summary>
         /// Gets or sets the IMDB id.
         /// </summary>
+        [MaxLength(25)]
         public virtual string ImdbId { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [MaxLength(255)]
         public virtual string Name { get; set; }
 
         /// <summary>
@@ -41,16 +44,19 @@
         /// <summary>
         /// Gets or sets the banner link.
         /// </summary>
+        [MaxLength(255)]
         public virtual string BannerLink { get; set; }
 
         /// <summary>
         /// Gets or sets the fan art link.
         /// </summary>
+        [MaxLength(255)]
         public virtual string FanArtLink { get; set; }
 
         /// <summary>
         /// Gets or sets the poster link.
         /// </summary>
+        [MaxLength(255)]
         public virtual string PosterLink { get; set; }
 
         /// <summary>

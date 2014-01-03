@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
@@ -36,6 +37,7 @@
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [MaxLength(255)]
         public virtual string Name { get; set; }
 
         /// <summary>
@@ -51,6 +53,7 @@
         /// <summary>
         /// Gets or sets the image link.
         /// </summary>
+        [MaxLength(255)]
         public virtual string ImageLink { get; set; }
 
         /// <summary>
