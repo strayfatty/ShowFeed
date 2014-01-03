@@ -4,7 +4,8 @@
     using System.Web.Mvc;
 
     using StackExchange.Profiling;
-    using StackExchange.Profiling.MVCHelpers;
+    using StackExchange.Profiling.EntityFramework6;
+    using StackExchange.Profiling.Mvc;
     using StackExchange.Profiling.SqlFormatters;
 
     /// <summary>
@@ -19,8 +20,7 @@
         {
             MiniProfiler.Settings.SqlFormatter = new SqlServerFormatter();
 
-            // TODO: EF6 profiling, once miniprofiler supports it
-            ////MiniProfilerEF.Initialize();
+            MiniProfilerEF6.Initialize();
 
             GlobalFilters.Filters.Add(new ProfilingActionFilter());
         }
