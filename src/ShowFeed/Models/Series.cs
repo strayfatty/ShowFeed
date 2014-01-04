@@ -68,5 +68,10 @@
         /// Gets or sets the user that follow to the show.
         /// </summary>
         public virtual ICollection<User> Followers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the updates.
+        /// </summary>
+        public virtual ICollection<Update> Updates { get; set; }
     }
 }

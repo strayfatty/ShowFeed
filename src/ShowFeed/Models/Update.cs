@@ -1,12 +1,13 @@
 ﻿namespace ShowFeed.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The update.
     /// </summary>
     [Table("Update")]
-    public class Update ////: Entity
+    public class Update : Entity
     {
         /// <summary>
         /// Gets or sets the time when the update started as a unix time stamp.
@@ -19,13 +20,13 @@
         public virtual int Finished { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of series that have been updated.
+        /// Gets or sets the updated series.
         /// </summary>
-        public virtual int NumberOfSeriesUpdated { get; set; }
+        public virtual ICollection<Series> Series { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of updated that have been updated.
+        /// Gets or sets the updated episodes.
         /// </summary>
-        public virtual int NumberOfEpisodesUpdated { get; set; }
+        public virtual ICollection<Episode> Episodes { get; set; }
     }
 }

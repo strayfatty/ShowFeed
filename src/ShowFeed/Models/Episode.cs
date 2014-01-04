@@ -65,5 +65,10 @@
         /// Gets or sets the viewers.
         /// </summary>
         public virtual ICollection<User> Viewers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the updates.
+        /// </summary>
+        public virtual ICollection<Update> Updates { get; set; }
     }
 }
