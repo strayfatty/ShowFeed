@@ -23,30 +23,14 @@
         /// </summary>
         /// <param name="series">The series name.</param>
         /// <returns>A list of <see cref="Series"/>.</returns>
-        public IEnumerable<Series> Search(string series)
+        public IEnumerable<IBaseSeriesRecord> Search(string series)
         {
             using (MiniProfiler.Current.Step("search"))
             {
                 const string BaseAddress = "http://thetvdb.com/api/GetSeries.php?seriesname={0}&language=en";
                 var address = string.Format(BaseAddress, series);
                 var result = DownloadXml<TheTvDbSearchResults>(address);
-
-                using (MiniProfiler.Current.Step("map"))
-                {
-                    if (result.Series == null)
-                    {
-                        return new Series[0];
-                    }
-
-                    return result.Series.Select(
-                        x => new Series
-                        {
-                            SeriesId = x.SeriesId,
-                            ImdbId = x.ImdbId,
-                            Name = x.Name,
-                            Description = x.Description,
-                        });
-                }
+                return result.Series ?? new IBaseSeriesRecord[0];
             }
         }
 
@@ -67,7 +51,7 @@
                 using (MiniProfiler.Current.Step("map"))
                 {
                     var series = new Series();
-                    series.SeriesId = result.Series.Id;
+                    series.SeriesId = result.Series.SeriesId;
                     series.ImdbId = result.Series.ImdbId;
                     series.Name = result.Series.Name;
                     series.Description = result.Series.Description;

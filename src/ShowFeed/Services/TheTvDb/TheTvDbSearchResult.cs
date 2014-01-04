@@ -8,7 +8,7 @@
     /// </summary>
     [Serializable]
     [XmlRoot("Series")]
-    public class TheTvDbSearchResult
+    public class TheTvDbSearchResult : IBaseSeriesRecord
     {
         /// <summary>
         /// Gets or sets the series id.
@@ -33,5 +33,20 @@
         /// </summary>
         [XmlElement("Overview")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the banner link.
+        /// </summary>
+        public string BannerLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets the fan art link.
+        /// </summary>
+        public string FanArtLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets the poster link.
+        /// </summary>
+        public string PosterLink { get; set; }
     }
 }

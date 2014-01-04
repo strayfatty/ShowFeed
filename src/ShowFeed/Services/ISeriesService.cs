@@ -14,7 +14,7 @@
         /// </summary>
         /// <param name="series">The series name.</param>
         /// <returns>A list of <see cref="Series"/>.</returns>
-        IEnumerable<Series> Search(string series);
+        IEnumerable<IBaseSeriesRecord> Search(string series);
 
         /// <summary>
         /// Gets the complete series details.
