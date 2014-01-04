@@ -1,9 +1,13 @@
 ﻿namespace ShowFeed.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Web.Mvc;
 
+    using ShowFeed.Api.Model;
     using ShowFeed.Models;
     using ShowFeed.Services;
+    using ShowFeed.ViewModels;
 
     /// <summary>
     /// The updates controller.
@@ -38,7 +42,29 @@
         [HttpGet]
         public ActionResult Index()
         {
-            return this.View();
+            var model = new UpdatesIndexViewModel();
+            model.Updates = this.database.Query<Update>()
+                .Where(x => x.Finished != 0)
+                .Select(x => new 
+                {
+                    Id = x.Id,
+                    Started = x.Started,
+                    Finished = x.Finished,
+                    NumberOfSeriesUpdated = x.Series.Count(),
+                    NumberOfEpisodesUpdated = x.Episodes.Count()
+                })
+                .ToArray()
+                .Select(x => new UpdatesIndexViewModel.Update
+                {
+                    Id = x.Id,
+                    Started = CalendarEntry.Epoch.AddSeconds(x.Started),
+                    Duration = new TimeSpan(0, 0, 0, 0, x.Finished - x.Started),
+                    NumberOfSeriesUpdated = x.NumberOfSeriesUpdated,
+                    NumberOfEpisodesUpdated = x.NumberOfEpisodesUpdated
+                })
+                .ToArray();
+
+            return this.View(model);
         }
 
         /// <summary>

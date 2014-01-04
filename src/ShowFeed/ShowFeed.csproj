@@ -251,6 +251,7 @@
     <Compile Include="ViewModels\AccountLogInViewModel.cs" />
     <Compile Include="ViewModels\HomeSearchSeriesViewModel.cs" />
     <Compile Include="ViewModels\HomeFollowingViewModel.cs" />
+    <Compile Include="ViewModels\UpdatesIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
