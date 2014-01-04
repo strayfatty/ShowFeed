@@ -41,8 +41,9 @@
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets the first aired date.
+        /// Gets or sets the first aired date.
         /// </summary>
+        [XmlIgnore]
         public DateTime? FirstAired
         {
             get
@@ -54,6 +55,11 @@
                 }
 
                 return null;
+            }
+
+            set
+            {
+                this.FirstAiredString = value.ToString();
             }
         }
 
