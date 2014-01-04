@@ -64,7 +64,7 @@
                         series.Episodes = result.Episodes.Select(
                             x => new Episode
                                 {
-                                    EpisodeId = x.Id,
+                                    EpisodeId = x.EpisodeId,
                                     SeasonNumber = x.SeasonNumber,
                                     EpisodeNumber = x.EpisodeNumber,
                                     Name = x.Name,

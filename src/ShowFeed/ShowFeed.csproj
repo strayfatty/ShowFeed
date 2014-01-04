@@ -227,6 +227,8 @@
     <Compile Include="Models\ShowFeedDatabase.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IBaseEpisodeRecord.cs" />
+    <Compile Include="Services\SeriesDetails.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbEpisode.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbSearchResult.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbSearchResults.cs" />
