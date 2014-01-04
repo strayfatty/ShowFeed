@@ -25,7 +25,7 @@
         /// <returns>A list of <see cref="Series"/>.</returns>
         public IEnumerable<Series> Search(string series)
         {
-            using (MiniProfiler.Current.Step("search series"))
+            using (MiniProfiler.Current.Step("search"))
             {
                 const string BaseAddress = "http://thetvdb.com/api/GetSeries.php?seriesname={0}&language=en";
                 var address = string.Format(BaseAddress, series);
@@ -104,20 +104,11 @@
         /// <returns>The deserialized xml.</returns>
         private static T DownloadXml<T>(string address)
         {
-            var webClient = new WebClient();
-            webClient.Encoding = System.Text.Encoding.UTF8;
-
-            string response;
             using (MiniProfiler.Current.Step("download"))
+            using (var stream = OpenStream(address))
             {
-                response = webClient.DownloadString(address);
-            }
-
-            var serializer = new XmlSerializer(typeof(T));
-            using (MiniProfiler.Current.Step("deserialize"))
-            using (var reader = new StringReader(response))
-            {
-                return (T)serializer.Deserialize(reader);
+                var serializer = new XmlSerializer(typeof(T));
+                return (T)serializer.Deserialize(stream);
             }
         }
 
@@ -130,20 +121,30 @@
         /// <returns>The deserialized xml.</returns>
         private static T DownloadZip<T>(string address, string filename)
         {
-            var webClient = new WebClient();
-            webClient.Encoding = System.Text.Encoding.UTF8;
-
             using (MiniProfiler.Current.Step("download"))
-            using (var fileStream = webClient.OpenRead(address))
-            using (var zipArchive = new ZipArchive(fileStream))
+            using (var stream = OpenStream(address))
+            using (var archive = new ZipArchive(stream))
             {
-                var zipEntry = zipArchive.Entries.First(x => x.Name == filename);
-                using (var entryStream = zipEntry.Open())
-                using (MiniProfiler.Current.Step("deserialize"))
+                var entry = archive.Entries.First(x => x.Name == filename);
+                using (var entryStream = entry.Open())
                 {
                     var serializer = new XmlSerializer(typeof(T));
                     return (T)serializer.Deserialize(entryStream);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Opens a stream.
+        /// </summary>
+        /// <param name="address">The address.</param>
+        /// <returns>The stream.</returns>
+        private static Stream OpenStream(string address)
+        {
+            using (MiniProfiler.Current.Step("open stream"))
+            using (var client = new WebClient())
+            {
+                return client.OpenRead(address);
             }
         }
     }
