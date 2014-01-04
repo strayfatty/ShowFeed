@@ -35,6 +35,7 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DatabaseConfig.Initialize();
+            AutoMapperConfig.RegisterMappings();
             SimpleInjectorConfig.RegisterDependencies();
 
             MiniProfilerConfig.PostApplicationStartInitialization();
