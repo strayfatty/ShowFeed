@@ -1,7 +1,11 @@
 ﻿namespace ShowFeed.Api
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
+
+    using AutoMapper;
 
     using ShowFeed.Models;
     using ShowFeed.Services;
@@ -45,7 +49,10 @@
             var show = this.database.Query<Series>().FirstOrDefault(x => x.SeriesId == id);
             if (object.ReferenceEquals(show, null))
             {
-                show = this.seriesService.GetDetails(id);
+                var seriesDetails = this.seriesService.GetDetails(id);
+                show = Mapper.Map<Series>(seriesDetails.Series);
+                show.Episodes = Mapper.Map<IEnumerable<IBaseEpisodeRecord>, ICollection<Episode>>(seriesDetails.Episodes);
+
                 this.database.Store(show);
             }
 

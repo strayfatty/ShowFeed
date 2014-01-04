@@ -11,9 +11,6 @@
 
     using ShowFeed.App_Start;
 
-    using SimpleInjector;
-    using SimpleInjector.Integration.Web.Mvc;
-
     using StackExchange.Profiling;
 
     /// <summary>

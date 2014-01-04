@@ -41,7 +41,7 @@
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the first aired date.
+        /// Gets the first aired date.
         /// </summary>
         public DateTime? FirstAired
         {
@@ -54,11 +54,6 @@
                 }
 
                 return null;
-            }
-
-            set
-            {
-                throw new NotSupportedException();
             }
         }
 

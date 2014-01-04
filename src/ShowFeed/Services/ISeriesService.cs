@@ -20,7 +20,7 @@
         /// Gets the complete series details.
         /// </summary>
         /// <param name="seriesId">The series id.</param>
-        /// <returns>The <see cref="Series"/>.</returns>
-        Series GetDetails(int seriesId);
+        /// <returns>The <see cref="SeriesDetails"/>.</returns>
+        SeriesDetails GetDetails(int seriesId);
     }
 }

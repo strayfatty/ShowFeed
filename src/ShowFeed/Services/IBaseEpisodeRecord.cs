@@ -33,9 +33,9 @@
         string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the first aired date.
+        /// Gets the first aired date.
         /// </summary>
-        DateTime? FirstAired { get; set; }
+        DateTime? FirstAired { get; }
 
         /// <summary>
         /// Gets or sets the image link.

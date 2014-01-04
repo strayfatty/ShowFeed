@@ -38,45 +38,19 @@
         /// Gets the complete series details.
         /// </summary>
         /// <param name="seriesId">The series id.</param>
-        /// <returns>The <see cref="Series"/>.</returns>
-        public Series GetDetails(int seriesId)
+        /// <returns>The <see cref="SeriesDetails"/>.</returns>
+        public SeriesDetails GetDetails(int seriesId)
         {
             using (MiniProfiler.Current.Step("get details"))
             {
                 const string BaseAddress = "http://thetvdb.com/api/{0}/series/{1}/all/en.zip";
                 var address = string.Format(BaseAddress, ConfigurationManager.AppSettings["TheTVDB.ApiKey"], seriesId);
-
                 var result = DownloadZip<TheTvDbSeriesDetails>(address, "en.xml");
-
-                using (MiniProfiler.Current.Step("map"))
+                return new SeriesDetails
                 {
-                    var series = new Series();
-                    series.SeriesId = result.Series.SeriesId;
-                    series.ImdbId = result.Series.ImdbId;
-                    series.Name = result.Series.Name;
-                    series.Description = result.Series.Description;
-                    series.BannerLink = result.Series.BannerLink;
-                    series.FanArtLink = result.Series.FanArtLink;
-                    series.PosterLink = result.Series.PosterLink;
-
-                    if (result.Episodes != null)
-                    {
-                        series.Episodes = result.Episodes.Select(
-                            x => new Episode
-                                {
-                                    EpisodeId = x.EpisodeId,
-                                    SeasonNumber = x.SeasonNumber,
-                                    EpisodeNumber = x.EpisodeNumber,
-                                    Name = x.Name,
-                                    Description = x.Description,
-                                    FirstAired = x.FirstAired,
-                                    ImageLink = x.ImageLink
-                                })
-                            .ToList();
-                    }
-
-                    return series;
-                }
+                    Series = result.Series,
+                    Episodes = result.Episodes ?? new IBaseEpisodeRecord[0]
+                };
             }
         }
 
