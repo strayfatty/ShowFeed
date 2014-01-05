@@ -78,6 +78,26 @@
         }
 
         /// <summary>
+        /// Gets the base series record.
+        /// </summary>
+        /// <param name="seriesId">The series id.</param>
+        /// <returns>The <see cref="IBaseSeriesRecord"/>.</returns>
+        public IBaseSeriesRecord GetBaseSeriesRecord(int seriesId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the base episode record.
+        /// </summary>
+        /// <param name="episodeId">The episode id.</param>
+        /// <returns>The <see cref="IBaseEpisodeRecord"/>.</returns>
+        public IBaseEpisodeRecord GetBaseEpisodeRecord(int episodeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Downloads a xml file.
         /// </summary>
         /// <typeparam name="T">The result type.</typeparam>
