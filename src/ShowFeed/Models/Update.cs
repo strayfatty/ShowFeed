@@ -20,6 +20,11 @@
         public virtual int Finished { get; set; }
 
         /// <summary>
+        /// Gets or sets the update time as a unix time stamp.
+        /// </summary>
+        public virtual int UpdateTime { get; set; }
+
+        /// <summary>
         /// Gets or sets the updated series.
         /// </summary>
         public virtual ICollection<Series> Series { get; set; }
