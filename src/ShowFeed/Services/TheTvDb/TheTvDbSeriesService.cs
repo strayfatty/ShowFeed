@@ -9,6 +9,7 @@
     using System.Net;
     using System.Xml.Serialization;
 
+    using ShowFeed.Api.Model;
     using ShowFeed.Models;
 
     using StackExchange.Profiling;
@@ -50,6 +51,28 @@
                 {
                     Series = result.Series,
                     Episodes = result.Episodes ?? new IBaseEpisodeRecord[0]
+                };
+            }
+        }
+
+        /// <summary>
+        /// Gets the update data.
+        /// </summary>
+        /// <param name="lastUpdate">The last time an update was run.</param>
+        /// <returns>The <see cref="UpdateData"/>.</returns>
+        public UpdateData GetUpdateData(int lastUpdate)
+        {
+            using (MiniProfiler.Current.Step("get update data"))
+            {
+                string updateType = GetUpdateType(lastUpdate);
+                const string BaseAddress = "http://thetvdb.com/api/{0}/updates/updates_{1}.zip";
+                var address = string.Format(BaseAddress, ConfigurationManager.AppSettings["TheTVDB.ApiKey"], updateType);
+                var result = DownloadZip<TheTvDbUpdateData>(address, string.Format("updates_{0}.xml", updateType));
+                return new UpdateData
+                {
+                    UpdateTime = result.UpdateTime,
+                    Series = (result.Series ?? new ISeriesUpdateRecord[0]).Where(x => x.UpdateTime > lastUpdate),
+                    Episodes = (result.Episodes ?? new IEpisodeUpdateRecord[0]).Where(x => x.UpdateTime > lastUpdate)
                 };
             }
         }
@@ -104,6 +127,27 @@
             {
                 return client.OpenRead(address);
             }
+        }
+
+        /// <summary>
+        /// Gets the update type, either day, week or month.
+        /// </summary>
+        /// <param name="lastUpdate">The last time an update was run.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        private static string GetUpdateType(int lastUpdate)
+        {
+            var timeSpan = DateTime.UtcNow - CalendarEntry.Epoch.AddSeconds(lastUpdate);
+            if (timeSpan.TotalHours < 24.0)
+            {
+                return "day";
+            }
+
+            if (timeSpan.TotalDays < 7.0)
+            {
+                return "week";
+            }
+
+            return "month";
         }
     }
 }

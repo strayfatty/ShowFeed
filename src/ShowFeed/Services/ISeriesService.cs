@@ -22,5 +22,12 @@
         /// <param name="seriesId">The series id.</param>
         /// <returns>The <see cref="SeriesDetails"/>.</returns>
         SeriesDetails GetDetails(int seriesId);
+
+        /// <summary>
+        /// Gets the update data.
+        /// </summary>
+        /// <param name="lastUpdate">The last time an update was run.</param>
+        /// <returns>The <see cref="UpdateData"/>.</returns>
+        UpdateData GetUpdateData(int lastUpdate);
     }
 }
