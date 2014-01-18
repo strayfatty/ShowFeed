@@ -7,6 +7,8 @@
 
     using AutoMapper;
 
+    using MoreLinq;
+
     using ShowFeed.Api.Model;
     using ShowFeed.Models;
     using ShowFeed.Services;
@@ -94,18 +96,11 @@
 
                 var updateData = this.seriesService.GetUpdateData(lastUpdate != null ? lastUpdate.UpdateTime : 0);
 
-                var seriesIds = updateData.Series.Select(x => x.SeriesId)
+                updateData.Series.Select(x => x.SeriesId)
                     .Union(updateData.Episodes.Select(x => x.SeriesId))
-                    .Distinct();
-
-                foreach (var seriesId in seriesIds)
-                {
-                    var id = seriesId;
-                    var updatedEpisodes = updateData.Episodes.Where(x => x.SeriesId == id)
-                                                    .Select(x => x.EpisodeId);
-
-                    this.Update(update, seriesId, updatedEpisodes);
-                }
+                    .Distinct()
+                    .Batch(100)
+                    .ForEach(x => this.UpdateBatch(update, updateData, x));
 
                 update.Finished = (int)(DateTime.UtcNow - CalendarEntry.Epoch).TotalSeconds;
                 update.UpdateTime = updateData.UpdateTime;
@@ -118,30 +113,38 @@
         }
 
         /// <summary>
+        /// Updates a series batch.
+        /// </summary>
+        /// <param name="update">The update.</param>
+        /// <param name="updateData">The update data.</param>
+        /// <param name="seriesIds">The series ids.</param>
+        private void UpdateBatch(Update update, UpdateData updateData, IEnumerable<int> seriesIds)
+        {
+            this.database.Query<Series>()
+                .Where(x => seriesIds.Contains(x.SeriesId))
+                .ToArray()
+                .ForEach(x => this.UpdateSeries(update, updateData, x));
+        }
+
+        /// <summary>
         /// Update a series.
         /// </summary>
         /// <param name="update">The update.</param>
-        /// <param name="seriesId">The series id.</param>
-        /// <param name="updatedEpisodes">The updated episodes.</param>
-        private void Update(Update update, int seriesId, IEnumerable<int> updatedEpisodes)
+        /// <param name="updateData">The update data.</param>
+        /// <param name="series">The series.</param>
+        private void UpdateSeries(Update update, UpdateData updateData, Series series)
         {
             using (MiniProfiler.Current.Step("update series"))
             {
-                var series = this.database.Load<Series>(seriesId);
-                if (series == null)
-                {
-                    return;
-                }
-
-                var seriesData = this.seriesService.GetDetails(seriesId);
+                var seriesData = this.seriesService.GetDetails(series.SeriesId);
 
                 Mapper.Map(seriesData.Series, series);
                 series.Updates.Add(update);
                 
-                foreach (var episodeId in updatedEpisodes)
+                foreach (var updatedEpisode in updateData.Episodes.Where(x => x.SeriesId == series.SeriesId))
                 {
-                    var episode = series.Episodes.FirstOrDefault(x => x.EpisodeId == episodeId);
-                    var episodeRecord = seriesData.Episodes.FirstOrDefault(x => x.EpisodeId == episodeId);
+                    var episode = series.Episodes.FirstOrDefault(x => x.EpisodeId == updatedEpisode.EpisodeId);
+                    var episodeRecord = seriesData.Episodes.FirstOrDefault(x => x.EpisodeId == updatedEpisode.EpisodeId);
 
                     if (episode != null)
                     {
