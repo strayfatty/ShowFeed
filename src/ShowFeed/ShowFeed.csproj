@@ -67,6 +67,9 @@
     <Reference Include="MiniProfiler.Mvc">
       <HintPath>..\..\lib\MiniProfiler3\MiniProfiler.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="MoreLinq">
+      <HintPath>..\..\lib\morelinq.1.0.16006\lib\net35\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
