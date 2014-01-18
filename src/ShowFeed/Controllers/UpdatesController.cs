@@ -50,6 +50,8 @@
             var model = new UpdatesIndexViewModel();
             model.Updates = this.database.Query<Update>()
                 .Where(x => x.Finished != 0)
+                .OrderByDescending(x => x.Started)
+                .Take(10)
                 .Select(x => new 
                 {
                     Id = x.Id,
@@ -84,15 +86,26 @@
                 .FirstOrDefault();
 
             var startTime = DateTime.UtcNow;
-            var offset = (int)(startTime.AddSeconds(-10) - CalendarEntry.Epoch).TotalSeconds;
+            var offset = (int)(startTime.AddHours(-1) - CalendarEntry.Epoch).TotalSeconds;
             if (lastUpdate == null || lastUpdate.Started < offset)
             {
                 var update = new Update();
                 update.Started = (int)(startTime - CalendarEntry.Epoch).TotalSeconds;
 
                 var updateData = this.seriesService.GetUpdateData(lastUpdate != null ? lastUpdate.UpdateTime : 0);
-                this.UpdateSeries(update, updateData.Series);
-                this.UpdateEpisodes(update, updateData.Episodes);
+
+                var seriesIds = updateData.Series.Select(x => x.SeriesId)
+                    .Union(updateData.Episodes.Select(x => x.SeriesId))
+                    .Distinct();
+
+                foreach (var seriesId in seriesIds)
+                {
+                    var id = seriesId;
+                    var updatedEpisodes = updateData.Episodes.Where(x => x.SeriesId == id)
+                                                    .Select(x => x.EpisodeId);
+
+                    this.Update(update, seriesId, updatedEpisodes);
+                }
 
                 update.Finished = (int)(DateTime.UtcNow - CalendarEntry.Epoch).TotalSeconds;
                 update.UpdateTime = updateData.UpdateTime;
@@ -104,29 +117,51 @@
             return this.RedirectToRoute("updates");
         }
 
-        private void UpdateSeries(Update update, IEnumerable<ISeriesUpdateRecord> records)
+        /// <summary>
+        /// Update a series.
+        /// </summary>
+        /// <param name="update">The update.</param>
+        /// <param name="seriesId">The series id.</param>
+        /// <param name="updatedEpisodes">The updated episodes.</param>
+        private void Update(Update update, int seriesId, IEnumerable<int> updatedEpisodes)
         {
             using (MiniProfiler.Current.Step("update series"))
             {
-                foreach (var record in records)
+                var series = this.database.Load<Series>(seriesId);
+                if (series == null)
                 {
-                    var series = this.database.Load<Series>(record.SeriesId);
-                    if (series == null)
-                    {
-                        continue;
-                    }
-
-                    ////var baseSeriesRecord = this.seriesService.GetBaseSeriesRecord(record.SeriesId);
-                    ////Mapper.Map(baseSeriesRecord, series);
-                    ////update.Series.Add(series);
+                    return;
                 }
-            }
-        }
 
-        private void UpdateEpisodes(Update update, IEnumerable<IEpisodeUpdateRecord> records)
-        {
-            using (MiniProfiler.Current.Step("update series"))
-            {
+                var seriesData = this.seriesService.GetDetails(seriesId);
+
+                Mapper.Map(seriesData.Series, series);
+                series.Updates.Add(update);
+                
+                foreach (var episodeId in updatedEpisodes)
+                {
+                    var episode = series.Episodes.FirstOrDefault(x => x.EpisodeId == episodeId);
+                    var episodeRecord = seriesData.Episodes.FirstOrDefault(x => x.EpisodeId == episodeId);
+
+                    if (episode != null)
+                    {
+                        if (episodeRecord == null)
+                        {
+                            series.Episodes.Remove(episode);
+                        }
+                        else
+                        {
+                            Mapper.Map(episodeRecord, episode);
+                            episode.Updates.Add(update);
+                        }
+                    }
+                    else if (episodeRecord != null)
+                    {
+                        episode = Mapper.Map<Episode>(episodeRecord);
+                        episode.Updates.Add(update);
+                        series.Episodes.Add(episode);
+                    }
+                }
             }
         }
     }

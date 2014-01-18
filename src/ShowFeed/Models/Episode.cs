@@ -17,6 +17,7 @@
         public Episode()
         {
             this.Viewers = new List<User>();
+            this.Updates = new List<Update>();
         }
 
         /// <summary>

@@ -29,19 +29,5 @@
         /// <param name="lastUpdate">The last time an update was run.</param>
         /// <returns>The <see cref="UpdateData"/>.</returns>
         UpdateData GetUpdateData(int lastUpdate);
-
-        /// <summary>
-        /// Gets the base series record.
-        /// </summary>
-        /// <param name="seriesId">The series id.</param>
-        /// <returns>The <see cref="IBaseSeriesRecord"/>.</returns>
-        IBaseSeriesRecord GetBaseSeriesRecord(int seriesId);
-
-        /// <summary>
-        /// Gets the base episode record.
-        /// </summary>
-        /// <param name="episodeId">The episode id.</param>
-        /// <returns>The <see cref="IBaseEpisodeRecord"/>.</returns>
-        IBaseEpisodeRecord GetBaseEpisodeRecord(int episodeId);
     }
 }

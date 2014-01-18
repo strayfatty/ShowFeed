@@ -17,6 +17,7 @@
         {
             this.Episodes = new List<Episode>();
             this.Followers = new List<User>();
+            this.Updates = new List<Update>();
         }
 
         /// <summary>
