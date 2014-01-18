@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,6 +42,12 @@
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\..\lib\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\lib\AutoMapper.3.1.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\..\lib\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -59,6 +66,9 @@
     </Reference>
     <Reference Include="MiniProfiler.Mvc">
       <HintPath>..\..\lib\MiniProfiler3\MiniProfiler.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreLinq">
+      <HintPath>..\..\lib\morelinq.1.0.16006\lib\net35\MoreLinq.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -191,6 +201,7 @@
     <Compile Include="Api\Model\CalendarQuery.cs" />
     <Compile Include="Api\Model\CalendarQueryResult.cs" />
     <Compile Include="Api\SeriesApiController.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -200,6 +211,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UpdatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -215,25 +227,44 @@
     <Compile Include="Migrations\201401031832155_AddMaxLength.Designer.cs">
       <DependentUpon>201401031832155_AddMaxLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401042000118_AddUpdate.cs" />
+    <Compile Include="Migrations\201401042000118_AddUpdate.Designer.cs">
+      <DependentUpon>201401042000118_AddUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401051734051_AddUpdateTime.cs" />
+    <Compile Include="Migrations\201401051734051_AddUpdateTime.Designer.cs">
+      <DependentUpon>201401051734051_AddUpdateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\IDatabase.cs" />
     <Compile Include="Models\Series.cs" />
+    <Compile Include="Models\Update.cs" />
+    <Compile Include="Services\IBaseSeriesRecord.cs" />
+    <Compile Include="Services\IEpisodeUpdateRecord.cs" />
     <Compile Include="Services\ISeriesService.cs" />
     <Compile Include="Models\ShowFeedDatabase.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IBaseEpisodeRecord.cs" />
+    <Compile Include="Services\ISeriesUpdateRecord.cs" />
+    <Compile Include="Services\SeriesDetails.cs" />
+    <Compile Include="Services\TheTvDb\TheTvDbEpisodeUpdateRecord.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbEpisode.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbSearchResult.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbSearchResults.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbSeries.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbSeriesDetails.cs" />
     <Compile Include="Services\TheTvDb\TheTvDbSeriesService.cs" />
+    <Compile Include="Services\TheTvDb\TheTvDbSeriesUpdateRecord.cs" />
+    <Compile Include="Services\TheTvDb\TheTvDbUpdateData.cs" />
+    <Compile Include="Services\UpdateData.cs" />
     <Compile Include="ViewModels\AccountSignUpViewModel.cs" />
     <Compile Include="ViewModels\AccountLogInViewModel.cs" />
     <Compile Include="ViewModels\HomeSearchSeriesViewModel.cs" />
     <Compile Include="ViewModels\HomeFollowingViewModel.cs" />
+    <Compile Include="ViewModels\UpdatesIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -251,6 +282,7 @@
     <Content Include="Views\Home\Calendar.cshtml" />
     <Content Include="Views\Home\Following.cshtml" />
     <Content Include="Views\Home\SearchSeries.cshtml" />
+    <Content Include="Views\Updates\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -270,6 +302,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401031832155_AddMaxLength.resx">
       <DependentUpon>201401031832155_AddMaxLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401042000118_AddUpdate.resx">
+      <DependentUpon>201401042000118_AddUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401051734051_AddUpdateTime.resx">
+      <DependentUpon>201401051734051_AddUpdateTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

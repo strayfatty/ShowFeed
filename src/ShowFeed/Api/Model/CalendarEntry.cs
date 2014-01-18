@@ -39,7 +39,7 @@
         {
             get
             {
-                return (long)(this.EventDay - Epoch).TotalSeconds * 1000;
+                return (long)(this.EventDay - Epoch).TotalMilliseconds;
             }
         }
 
@@ -50,7 +50,7 @@
         {
             get
             {
-                return (long)(this.EventDay - Epoch).TotalSeconds * 1000;
+                return (long)(this.EventDay - Epoch).TotalMilliseconds;
             }
         }
 

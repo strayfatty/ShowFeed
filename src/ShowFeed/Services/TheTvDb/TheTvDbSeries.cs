@@ -8,48 +8,48 @@
     /// </summary>
     [Serializable]
     [XmlRoot("Series")]
-    public class TheTvDbSeries
+    public class TheTvDbSeries : IBaseSeriesRecord
     {
         /// <summary>
-        /// Gets or sets the id.
+        /// Gets or sets the series id.
         /// </summary>
         [XmlElement("id")]
-        public int Id { get; set; }
+        public int SeriesId { get; set; }
 
         /// <summary>
         /// Gets or sets the IMDB id.
         /// </summary>
         [XmlElement("IMDB_ID")]
-        public virtual string ImdbId { get; set; }
+        public string ImdbId { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         [XmlElement("SeriesName")]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the description.
         /// </summary>
         [XmlElement("Overview")]
-        public virtual string Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the banner link.
         /// </summary>
         [XmlElement("banner")]
-        public virtual string BannerLink { get; set; }
+        public string BannerLink { get; set; }
 
         /// <summary>
         /// Gets or sets the fan art link.
         /// </summary>
         [XmlElement("fanart")]
-        public virtual string FanArtLink { get; set; }
+        public string FanArtLink { get; set; }
 
         /// <summary>
         /// Gets or sets the poster link.
         /// </summary>
         [XmlElement("poster")]
-        public virtual string PosterLink { get; set; }
+        public string PosterLink { get; set; }
     }
 }

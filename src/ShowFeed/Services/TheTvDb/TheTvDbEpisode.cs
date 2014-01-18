@@ -8,13 +8,13 @@
     /// </summary>
     [Serializable]
     [XmlRoot("Episode")]
-    public class TheTvDbEpisode
+    public class TheTvDbEpisode : IBaseEpisodeRecord
     {
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
         [XmlElement("id")]
-        public int Id { get; set; }
+        public int EpisodeId { get; set; }
 
         /// <summary>
         /// Gets or sets the season number.
@@ -41,8 +41,9 @@
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets the first aired date.
+        /// Gets or sets the first aired date.
         /// </summary>
+        [XmlIgnore]
         public DateTime? FirstAired
         {
             get
@@ -54,6 +55,11 @@
                 }
 
                 return null;
+            }
+
+            set
+            {
+                this.FirstAiredString = value.ToString();
             }
         }
 
