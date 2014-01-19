@@ -11,9 +11,6 @@
 
     using ShowFeed.App_Start;
 
-    using SimpleInjector;
-    using SimpleInjector.Integration.Web.Mvc;
-
     using StackExchange.Profiling;
 
     /// <summary>
@@ -35,6 +32,7 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DatabaseConfig.Initialize();
+            AutoMapperConfig.RegisterMappings();
             SimpleInjectorConfig.RegisterDependencies();
 
             MiniProfilerConfig.PostApplicationStartInitialization();

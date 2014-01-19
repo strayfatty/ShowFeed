@@ -14,13 +14,20 @@
         /// </summary>
         /// <param name="series">The series name.</param>
         /// <returns>A list of <see cref="Series"/>.</returns>
-        IEnumerable<Series> Search(string series);
+        IEnumerable<IBaseSeriesRecord> Search(string series);
 
         /// <summary>
         /// Gets the complete series details.
         /// </summary>
         /// <param name="seriesId">The series id.</param>
-        /// <returns>The <see cref="Series"/>.</returns>
-        Series GetDetails(int seriesId);
+        /// <returns>The <see cref="SeriesDetails"/>.</returns>
+        SeriesDetails GetDetails(int seriesId);
+
+        /// <summary>
+        /// Gets the update data.
+        /// </summary>
+        /// <param name="lastUpdate">The last time an update was run.</param>
+        /// <returns>The <see cref="UpdateData"/>.</returns>
+        UpdateData GetUpdateData(int lastUpdate);
     }
 }

@@ -18,6 +18,7 @@
         /// </summary>
         public static void PreApplicationStartInitialization()
         {
+            MiniProfiler.Settings.MaxJsonResponseSize = int.MaxValue;
             MiniProfiler.Settings.SqlFormatter = new SqlServerFormatter();
 
             MiniProfilerEF6.Initialize();

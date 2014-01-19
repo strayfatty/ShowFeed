@@ -9,6 +9,7 @@
     using System.Net;
     using System.Xml.Serialization;
 
+    using ShowFeed.Api.Model;
     using ShowFeed.Models;
 
     using StackExchange.Profiling;
@@ -23,30 +24,14 @@
         /// </summary>
         /// <param name="series">The series name.</param>
         /// <returns>A list of <see cref="Series"/>.</returns>
-        public IEnumerable<Series> Search(string series)
+        public IEnumerable<IBaseSeriesRecord> Search(string series)
         {
-            using (MiniProfiler.Current.Step("search series"))
+            using (MiniProfiler.Current.Step("search"))
             {
                 const string BaseAddress = "http://thetvdb.com/api/GetSeries.php?seriesname={0}&language=en";
                 var address = string.Format(BaseAddress, series);
                 var result = DownloadXml<TheTvDbSearchResults>(address);
-
-                using (MiniProfiler.Current.Step("map"))
-                {
-                    if (result.Series == null)
-                    {
-                        return new Series[0];
-                    }
-
-                    return result.Series.Select(
-                        x => new Series
-                        {
-                            SeriesId = x.SeriesId,
-                            ImdbId = x.ImdbId,
-                            Name = x.Name,
-                            Description = x.Description,
-                        });
-                }
+                return result.Series ?? new IBaseSeriesRecord[0];
             }
         }
 
@@ -54,45 +39,41 @@
         /// Gets the complete series details.
         /// </summary>
         /// <param name="seriesId">The series id.</param>
-        /// <returns>The <see cref="Series"/>.</returns>
-        public Series GetDetails(int seriesId)
+        /// <returns>The <see cref="SeriesDetails"/>.</returns>
+        public SeriesDetails GetDetails(int seriesId)
         {
             using (MiniProfiler.Current.Step("get details"))
             {
                 const string BaseAddress = "http://thetvdb.com/api/{0}/series/{1}/all/en.zip";
                 var address = string.Format(BaseAddress, ConfigurationManager.AppSettings["TheTVDB.ApiKey"], seriesId);
-
                 var result = DownloadZip<TheTvDbSeriesDetails>(address, "en.xml");
-
-                using (MiniProfiler.Current.Step("map"))
+                return new SeriesDetails
                 {
-                    var series = new Series();
-                    series.SeriesId = result.Series.Id;
-                    series.ImdbId = result.Series.ImdbId;
-                    series.Name = result.Series.Name;
-                    series.Description = result.Series.Description;
-                    series.BannerLink = result.Series.BannerLink;
-                    series.FanArtLink = result.Series.FanArtLink;
-                    series.PosterLink = result.Series.PosterLink;
+                    Series = result.Series,
+                    Episodes = result.Episodes ?? new IBaseEpisodeRecord[0]
+                };
+            }
+        }
 
-                    if (result.Episodes != null)
-                    {
-                        series.Episodes = result.Episodes.Select(
-                            x => new Episode
-                                {
-                                    EpisodeId = x.Id,
-                                    SeasonNumber = x.SeasonNumber,
-                                    EpisodeNumber = x.EpisodeNumber,
-                                    Name = x.Name,
-                                    Description = x.Description,
-                                    FirstAired = x.FirstAired,
-                                    ImageLink = x.ImageLink
-                                })
-                            .ToList();
-                    }
-
-                    return series;
-                }
+        /// <summary>
+        /// Gets the update data.
+        /// </summary>
+        /// <param name="lastUpdate">The last time an update was run.</param>
+        /// <returns>The <see cref="UpdateData"/>.</returns>
+        public UpdateData GetUpdateData(int lastUpdate)
+        {
+            using (MiniProfiler.Current.Step("get update data"))
+            {
+                string updateType = GetUpdateType(lastUpdate);
+                const string BaseAddress = "http://thetvdb.com/api/{0}/updates/updates_{1}.zip";
+                var address = string.Format(BaseAddress, ConfigurationManager.AppSettings["TheTVDB.ApiKey"], updateType);
+                var result = DownloadZip<TheTvDbUpdateData>(address, string.Format("updates_{0}.xml", updateType));
+                return new UpdateData
+                {
+                    UpdateTime = result.UpdateTime,
+                    Series = (result.Series ?? new ISeriesUpdateRecord[0]).Where(x => x.UpdateTime > lastUpdate),
+                    Episodes = (result.Episodes ?? new IEpisodeUpdateRecord[0]).Where(x => x.UpdateTime > lastUpdate)
+                };
             }
         }
 
@@ -104,20 +85,11 @@
         /// <returns>The deserialized xml.</returns>
         private static T DownloadXml<T>(string address)
         {
-            var webClient = new WebClient();
-            webClient.Encoding = System.Text.Encoding.UTF8;
-
-            string response;
             using (MiniProfiler.Current.Step("download"))
+            using (var stream = OpenStream(address))
             {
-                response = webClient.DownloadString(address);
-            }
-
-            var serializer = new XmlSerializer(typeof(T));
-            using (MiniProfiler.Current.Step("deserialize"))
-            using (var reader = new StringReader(response))
-            {
-                return (T)serializer.Deserialize(reader);
+                var serializer = new XmlSerializer(typeof(T));
+                return (T)serializer.Deserialize(stream);
             }
         }
 
@@ -130,21 +102,52 @@
         /// <returns>The deserialized xml.</returns>
         private static T DownloadZip<T>(string address, string filename)
         {
-            var webClient = new WebClient();
-            webClient.Encoding = System.Text.Encoding.UTF8;
-
             using (MiniProfiler.Current.Step("download"))
-            using (var fileStream = webClient.OpenRead(address))
-            using (var zipArchive = new ZipArchive(fileStream))
+            using (var stream = OpenStream(address))
+            using (var archive = new ZipArchive(stream))
             {
-                var zipEntry = zipArchive.Entries.First(x => x.Name == filename);
-                using (var entryStream = zipEntry.Open())
-                using (MiniProfiler.Current.Step("deserialize"))
+                var entry = archive.Entries.First(x => x.Name == filename);
+                using (var entryStream = entry.Open())
                 {
                     var serializer = new XmlSerializer(typeof(T));
                     return (T)serializer.Deserialize(entryStream);
                 }
             }
+        }
+
+        /// <summary>
+        /// Opens a stream.
+        /// </summary>
+        /// <param name="address">The address.</param>
+        /// <returns>The stream.</returns>
+        private static Stream OpenStream(string address)
+        {
+            using (MiniProfiler.Current.Step("open stream"))
+            using (var client = new WebClient())
+            {
+                return client.OpenRead(address);
+            }
+        }
+
+        /// <summary>
+        /// Gets the update type, either day, week or month.
+        /// </summary>
+        /// <param name="lastUpdate">The last time an update was run.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        private static string GetUpdateType(int lastUpdate)
+        {
+            var timeSpan = DateTime.UtcNow - CalendarEntry.Epoch.AddSeconds(lastUpdate);
+            if (timeSpan.TotalHours < 24.0)
+            {
+                return "day";
+            }
+
+            if (timeSpan.TotalDays < 7.0)
+            {
+                return "week";
+            }
+
+            return "month";
         }
     }
 }

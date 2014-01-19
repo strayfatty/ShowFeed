@@ -24,6 +24,12 @@
             routes.MapRoute("calendar", "calendar", new { controller = "Home", action = "Calendar" });
             routes.MapRoute("following", "following", new { controller = "Home", action = "Following" });
             routes.MapRoute("searchseries", "searchseries", new { controller = "Home", action = "SearchSeries" });
+
+            routes.MapRoute("series/details", "series/{id}", new { controller = "Series", action = "Details" });
+            routes.MapRoute("series", "series", new { controller = "Series", action = "Index" });
+
+            routes.MapRoute("updates", "updates", new { controller = "Updates", action = "Index" });
+            routes.MapRoute("updates/new", "updates/new", new { controller = "Updates", action = "New" });
         }
     }
 }

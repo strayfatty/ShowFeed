@@ -14,7 +14,7 @@
         {
             get
             {
-                return CalendarEntry.Epoch.AddSeconds(this.From / 1000.0);
+                return CalendarEntry.Epoch.AddMilliseconds(this.From);
             }
         }
 
@@ -25,7 +25,7 @@
         {
             get
             {
-                return CalendarEntry.Epoch.AddSeconds(this.To / 1000.0);
+                return CalendarEntry.Epoch.AddMilliseconds(this.To);
             }
         }
 

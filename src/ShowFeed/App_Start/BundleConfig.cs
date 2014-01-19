@@ -23,7 +23,8 @@
                 "~/Scripts/jquery-2.0.3.js",
                 "~/Scripts/underscore.js",
                 "~/Scripts/bootstrap.js",
-                "~/Scripts/calendar.js"));
+                "~/Scripts/calendar.js",
+                "~/Scripts/custom.js"));
 
             ////Set EnableOptimizations to true to test bundles while debugging.
             ////BundleTable.EnableOptimizations = true;

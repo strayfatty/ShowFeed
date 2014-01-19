@@ -1,0 +1,38 @@
+﻿@model ShowFeed.ViewModels.UpdatesIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "updates";
+}
+
+<div class="page-header">
+    <h3>Updates</h3>
+</div>
+
+<form action="@Url.RouteUrl("updates/new")" method="post">
+    <button type="submit" class="btn btn-primary btn-sm">Start update</button>
+</form>
+
+<br />
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Started</th>
+            <th>Duration</th>
+            <th style="width: 11em">Updated Series</th>
+            <th style="width: 11em">Updated Episodes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var update in Model.Updates.OrderByDescending(x => x.Started))
+        {
+            <tr>
+                <td>@update.Started.ToString()</td>
+                <td>@update.Duration.ToString()</td>
+                <td style="text-align: right">@update.NumberOfSeriesUpdated</td>
+                <td style="text-align: right">@update.NumberOfEpisodesUpdated</td>
+            </tr>
+        }
+    </tbody>
+</table>

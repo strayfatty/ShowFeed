@@ -23,6 +23,32 @@
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets the season number.
+        /// </summary>
+        public int SeasonNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the episode number.
+        /// </summary>
+        public int EpisodeNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the episode title.
+        /// </summary>
+        public string EpisodeTitle { get; set; }
+
+        /// <summary>
+        /// Gets the description.
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return string.Format("S{0:00}E{1:00} - {2}", this.SeasonNumber, this.EpisodeNumber, this.EpisodeTitle);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the url.
         /// </summary>
         public string Url { get; set; }
@@ -39,7 +65,7 @@
         {
             get
             {
-                return (long)(this.EventDay - Epoch).TotalSeconds * 1000;
+                return (long)(this.EventDay - Epoch).TotalMilliseconds;
             }
         }
 
@@ -50,7 +76,7 @@
         {
             get
             {
-                return (long)(this.EventDay - Epoch).TotalSeconds * 1000;
+                return (long)(this.EventDay - Epoch).TotalMilliseconds;
             }
         }
 

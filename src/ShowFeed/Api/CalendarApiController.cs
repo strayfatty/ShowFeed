@@ -53,7 +53,10 @@
             result.Result = databaseQuery.Select(x => new CalendarEntry
                     {
                         Id = x.Id,
-                        Title = x.Series.Name + " - " + x.Name,
+                        Title = x.Series.Name,
+                        SeasonNumber = x.SeasonNumber,
+                        EpisodeNumber = x.EpisodeNumber,
+                        EpisodeTitle = x.Name,
                         Class = x.FirstAired.Value >= DateTime.Today ? "event-info" : x.Viewers.Any(y => y.Username == WebSecurity.CurrentUserName) ? "event-success" : "event-important",
                         EventDay = x.FirstAired.Value
                     })

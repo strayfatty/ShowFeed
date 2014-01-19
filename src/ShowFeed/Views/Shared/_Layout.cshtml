@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ShowFeed</title>
+    <title>@("showfeed" + (ViewBag.Title == null ? string.Empty : " | " + ViewBag.Title))</title>
     @Styles.Render("~/Content/css")
     @RenderSection("css", false)
 </head>
@@ -18,32 +18,35 @@
                         </li>
                     </ul>
                     <ul class="nav bs-sidenav">
-                        <li>
+                        <li class="@Url.RouteClass("calendar")">
                             <a href="@Url.RouteUrl("calendar")"><span class="glyphicon glyphicon-calendar"></span> Calendar</a>
+                        </li>
+                        <li class="@Url.RouteClass("series")">
+                            <a href="@Url.RouteUrl("series")"><span class="glyphicon glyphicon-film"></span> Series</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li>
                                 <a href="#"><span class="glyphicon glyphicon-tasks"></span> Watch Later</a>
                             </li>
-                            <li>
-                                <a href="@Url.RouteUrl("following")"><span class="glyphicon glyphicon-film"></span> Following</a>
+                            <li  class="@Url.RouteClass("following")">
+                                <a href="@Url.RouteUrl("following")"><span class="glyphicon glyphicon-bookmark"></span> Following</a>
                             </li>
                         }
                     </ul>
                     <ul class="nav bs-sidenav">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li>
+                            <li class="@Url.RouteClass("logout")">
                                 <a href="@Url.RouteUrl("logout")">Log Out</a>
                             </li>
                         }
                         else
                         {
-                            <li>
+                            <li class="@Url.RouteClass("login")">
                                 <a href="@Url.RouteUrl("login")">Log In</a>
                             </li>
-                            <li>
+                            <li class="@Url.RouteClass("signup")">
                                 <a href="@Url.RouteUrl("signup")">Sign Up</a>
                             </li>
                         }
