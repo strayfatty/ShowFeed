@@ -18,7 +18,7 @@
                         </li>
                     </ul>
                     <ul class="nav bs-sidenav">
-                        <li>
+                        <li class="@Url.RouteClass("calendar")">
                             <a href="@Url.RouteUrl("calendar")"><span class="glyphicon glyphicon-calendar"></span> Calendar</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
@@ -26,7 +26,7 @@
                             <li>
                                 <a href="#"><span class="glyphicon glyphicon-tasks"></span> Watch Later</a>
                             </li>
-                            <li>
+                            <li  class="@Url.RouteClass("following")">
                                 <a href="@Url.RouteUrl("following")"><span class="glyphicon glyphicon-film"></span> Following</a>
                             </li>
                         }
@@ -34,16 +34,16 @@
                     <ul class="nav bs-sidenav">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li>
+                            <li class="@Url.RouteClass("logout")">
                                 <a href="@Url.RouteUrl("logout")">Log Out</a>
                             </li>
                         }
                         else
                         {
-                            <li>
+                            <li class="@Url.RouteClass("login")">
                                 <a href="@Url.RouteUrl("login")">Log In</a>
                             </li>
-                            <li>
+                            <li class="@Url.RouteClass("signup")">
                                 <a href="@Url.RouteUrl("signup")">Sign Up</a>
                             </li>
                         }
