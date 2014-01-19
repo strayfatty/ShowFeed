@@ -1,0 +1,50 @@
+﻿@model ShowFeed.ViewModels.SeriesDetailsViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Name;
+}
+
+<div class="page-header">
+    <h3><strong>@Model.Name</strong></h3>
+    <small>
+        Links:
+        <a class="act act-primary" href="http://thetvdb.com/?tab=series&id=@Model.SeriesId" target="_blank">TheTVDB.com</a>
+        @if (!string.IsNullOrEmpty(Model.ImdbId))
+        {
+            <text>, </text>
+            <a class="act act-primary" href="http://imdb.com/title/@Model.ImdbId" target="_blank">IMDB.com</a>
+        }
+    </small>
+</div>
+
+@Model.Description
+
+<h4>Seasons</h4>
+
+@{
+    var seasons = Model.Episodes.GroupBy(x => x.SeasonNumber).OrderBy(x => x.Key);
+}
+
+<ul class="nav nav-tabs">
+    @foreach (var seasonNumber in seasons.Select(x => x.Key))
+    {
+        <li class="@(seasonNumber == 1 ? "active" : string.Empty)">
+            <a href="#s@(seasonNumber == 0 ? "pecials" : seasonNumber.ToString())" data-toggle="tab">
+                @(seasonNumber == 0 ? "Specials" : seasonNumber.ToString())
+            </a>
+        </li>
+    }
+</ul>
+
+<div class="tab-content">
+    @foreach (var season in seasons)
+    {
+        <div id="s@(season.Key == 0 ? "pecials" : season.Key.ToString())" class="tab-pane @(season.Key == 1 ? "active" : string.Empty)">
+            @foreach (var episode in season)
+            {
+                <text>@episode.Name</text><br />
+            }
+        </div>
+    }
+</div>

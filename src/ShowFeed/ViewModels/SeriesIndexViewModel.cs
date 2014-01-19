@@ -1,25 +1,25 @@
 ﻿namespace ShowFeed.ViewModels
 {
     /// <summary>
-    /// The home following view model.
+    /// The series index view model.
     /// </summary>
-    public class HomeFollowingViewModel
+    public class SeriesIndexViewModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeFollowingViewModel"/> class.
+        /// Initializes a new instance of the <see cref="SeriesIndexViewModel"/> class.
         /// </summary>
-        public HomeFollowingViewModel()
+        public SeriesIndexViewModel()
         {
             this.Entries = new Series[0];
         }
 
         /// <summary>
-        /// Gets or sets the shows.
+        /// Gets or sets the series.
         /// </summary>
         public Series[] Entries { get; set; }
 
         /// <summary>
-        /// The show.
+        /// The series.
         /// </summary>
         public class Series
         {
@@ -34,9 +34,10 @@
             public string Name { get; set; }
 
             /// <summary>
-            /// Gets or sets the description.
+            /// Gets or sets a value indicating whether the user is 
+            /// already following the show.
             /// </summary>
-            public string Description { get; set; }
+            public bool Following { get; set; }
         }
     }
 }

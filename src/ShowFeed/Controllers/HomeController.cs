@@ -65,11 +65,11 @@
         public ActionResult Following()
         {
             var model = new HomeFollowingViewModel();
-            model.Shows = this.database.Query<Series>()
+            model.Entries = this.database.Query<Series>()
                 .Where(x => x.Followers.Any(y => y.Username == WebSecurity.CurrentUserName))
-                .Select(x => new HomeFollowingViewModel.Show
+                .Select(x => new HomeFollowingViewModel.Series
                     {
-                        Id = x.Id,
+                        SeriesId = x.SeriesId,
                         Name = x.Name,
                         Description = x.Description,
                     })

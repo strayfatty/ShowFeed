@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Web.Http;
 
     using AutoMapper;
@@ -46,17 +47,17 @@
         [HttpPut]
         public void Put(int id)
         {
-            var show = this.database.Query<Series>().FirstOrDefault(x => x.SeriesId == id);
-            if (object.ReferenceEquals(show, null))
+            var series = this.database.Query<Series>().FirstOrDefault(x => x.SeriesId == id);
+            if (object.ReferenceEquals(series, null))
             {
                 var seriesDetails = this.seriesService.GetDetails(id);
-                show = Mapper.Map<Series>(seriesDetails.Series);
-                show.Episodes = Mapper.Map<IEnumerable<IBaseEpisodeRecord>, ICollection<Episode>>(seriesDetails.Episodes);
+                series = Mapper.Map<Series>(seriesDetails.Series);
+                series.Episodes = Mapper.Map<IEnumerable<IBaseEpisodeRecord>, ICollection<Episode>>(seriesDetails.Episodes);
 
-                this.database.Store(show);
+                this.database.Store(series);
             }
 
-            show.Followers.Add(this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName));
+            series.Followers.Add(this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName));
             this.database.SaveChanges();
         }
 
@@ -68,9 +69,13 @@
         public void Delete(int id)
         {
             var user = this.database.Query<User>().First(x => x.Username == WebSecurity.CurrentUserName);
-            var show = this.database.Load<Series>(id);
+            var series = user.FollowedSeries.FirstOrDefault(x => x.SeriesId == id);
+            if (series == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
 
-            user.FollowedSeries.Remove(show);
+            user.FollowedSeries.Remove(series);
             this.database.SaveChanges();
         }
     }
