@@ -15,7 +15,7 @@
         {
             <tr>
                 <td>
-                    <a class="act act-primary" href="@Url.RouteUrl("series", new { id = series.SeriesId })">@series.Name</a>
+                    <a class="act act-primary" href="@Url.RouteUrl("series/details", new { id = series.SeriesId })">@series.Name</a>
                     @if (User.Identity.IsAuthenticated)
                     {
                         if (series.Following)

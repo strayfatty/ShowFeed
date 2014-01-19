@@ -20,7 +20,7 @@
         {
             <tr>
                 <td>
-                    <a class="act act-primary" href="@Url.RouteUrl("series", new { id = series.SeriesId })">@series.Name</a>
+                    <a class="act act-primary" href="@Url.RouteUrl("series/details", new { id = series.SeriesId })">@series.Name</a>
                     <button type="button" class="btn btn-danger btn-xs pull-right" data-seriesid="@series.SeriesId">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
