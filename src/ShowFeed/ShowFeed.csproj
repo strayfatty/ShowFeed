@@ -212,6 +212,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="Controllers\UpdatesController.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -242,6 +243,7 @@
     <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\IDatabase.cs" />
     <Compile Include="Models\Series.cs" />
+    <Compile Include="ViewModels\SeriesIndexViewModel.cs" />
     <Compile Include="Models\Update.cs" />
     <Compile Include="Services\IBaseSeriesRecord.cs" />
     <Compile Include="Services\IEpisodeUpdateRecord.cs" />
@@ -285,6 +287,7 @@
     <Content Include="Views\Home\Following.cshtml" />
     <Content Include="Views\Home\SearchSeries.cshtml" />
     <Content Include="Views\Updates\Index.cshtml" />
+    <Content Include="Views\Series\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

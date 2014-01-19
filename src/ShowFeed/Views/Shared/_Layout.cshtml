@@ -21,6 +21,9 @@
                         <li class="@Url.RouteClass("calendar")">
                             <a href="@Url.RouteUrl("calendar")"><span class="glyphicon glyphicon-calendar"></span> Calendar</a>
                         </li>
+                        <li class="@Url.RouteClass("series")">
+                            <a href="@Url.RouteUrl("series")"><span class="glyphicon glyphicon-film"></span> Series</a>
+                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li>

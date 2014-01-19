@@ -1,0 +1,80 @@
+﻿@model ShowFeed.ViewModels.SeriesIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "series";
+}
+
+<div class="page-header">
+    <h3>Series</h3>
+</div>
+
+<table class="table table-striped">
+    <tbody>
+        @foreach (var series in Model.Entries.OrderBy(x => x.Name))
+        {
+            <tr>
+                <td>
+                    <a class="act act-primary" href="@Url.RouteUrl("series", new { id = series.SeriesId })">@series.Name</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (series.Following)
+                         {
+                             <button type="button" class="btn btn-success btn-xs pull-right" data-seriesid="@series.SeriesId">
+                                 <span class="glyphicon glyphicon-check"></span>
+                             </button>
+                         }
+                         else
+                         {
+                             <button type="button" class="btn btn-primary btn-xs pull-right" data-seriesid="@series.SeriesId">
+                                 <span class="glyphicon glyphicon-unchecked"></span>
+                             </button>
+                         }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script type="text/javascript">
+        (function (window, undefined) {
+            $("body").on("click", ".btn-primary", function (event) {
+                var button = $(event.target).closest(".btn-primary");
+                button.attr("disabled", true);
+
+                $.ajax({
+                    type: "PUT",
+                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("seriesid"),
+                    success: function () {
+                        button.toggleClass("btn-primary btn-success");
+                        button.children(".glyphicon-unchecked").toggleClass("glyphicon-unchecked glyphicon-check");
+                        button.attr("disabled", false);
+                    },
+                    error: function () {
+                        button.attr("disabled", false);
+                    }
+                });
+            });
+
+            $("body").on("click", ".btn-success", function (event) {
+                var button = $(event.target).closest(".btn-success");
+                button.attr("disabled", true);
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("seriesid"),
+                    success: function () {
+                        button.toggleClass("btn-success btn-primary");
+                        button.children(".glyphicon-check").toggleClass("glyphicon-check glyphicon-unchecked");
+                        button.attr("disabled", false);
+                    },
+                    error: function () {
+                        button.attr("disabled", false);
+                    }
+                });
+            });
+        })(window);
+    </script>
+}

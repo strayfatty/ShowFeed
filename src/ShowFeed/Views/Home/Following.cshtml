@@ -25,10 +25,7 @@
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </td>
-            </tr>@*
-            <tr>
-                <td colspan="2">@show.Description</td>
-            </tr>*@
+            </tr>
         }
     </tbody>
 </table>
@@ -44,9 +41,7 @@
                     type: "DELETE",
                     url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("id"),
                     success: function () {
-                        var row = button.closest("tr");
-                        row.next().remove();
-                        row.remove();
+                        button.closest("tr").remove();
                     },
                     error: function () {
                         button.attr("disabled", false);
