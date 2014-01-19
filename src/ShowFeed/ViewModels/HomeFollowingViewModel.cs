@@ -10,23 +10,23 @@
         /// </summary>
         public HomeFollowingViewModel()
         {
-            this.Shows = new Show[0];
+            this.Entries = new Series[0];
         }
 
         /// <summary>
         /// Gets or sets the shows.
         /// </summary>
-        public Show[] Shows { get; set; }
+        public Series[] Entries { get; set; }
 
         /// <summary>
         /// The show.
         /// </summary>
-        public class Show
+        public class Series
         {
             /// <summary>
-            /// Gets or sets the id.
+            /// Gets or sets the series id.
             /// </summary>
-            public int Id { get; set; }
+            public int SeriesId { get; set; }
 
             /// <summary>
             /// Gets or sets the name.

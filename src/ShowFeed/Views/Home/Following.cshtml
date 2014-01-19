@@ -14,14 +14,14 @@
 <br />
 <br />
 
-<table class="table table-bordered table-striped">
+<table class="table table-striped">
     <tbody>
-        @foreach (var show in Model.Shows.OrderBy(x => x.Name))
+        @foreach (var series in Model.Entries.OrderBy(x => x.Name))
         {
             <tr>
                 <td>
-                    @show.Name
-                    <button type="button" class="btn btn-danger btn-xs pull-right" data-id="@show.Id">
+                    <a class="act act-primary" href="@Url.RouteUrl("series", new { id = series.SeriesId })">@series.Name</a>
+                    <button type="button" class="btn btn-danger btn-xs pull-right" data-seriesid="@series.SeriesId">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </td>
@@ -39,7 +39,7 @@
 
                 $.ajax({
                     type: "DELETE",
-                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("id"),
+                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("seriesid"),
                     success: function () {
                         button.closest("tr").remove();
                     },
