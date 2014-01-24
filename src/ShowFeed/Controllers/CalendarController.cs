@@ -1,10 +1,12 @@
 ﻿namespace ShowFeed.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
 
     using ShowFeed.Models;
+    using ShowFeed.ViewModels;
 
     using WebMatrix.WebData;
 
@@ -50,7 +52,12 @@
         {
             var date = new DateTime(year, month, 1);
             var end = date.AddMonths(1);
-            return this.View(date);
+
+            var model = new CalendarViewModel();
+            model.Date = date;
+
+            model.Episodes = this.GetEpisodes(date, end);
+            return this.View(model);
         }
 
         /// <summary>
@@ -67,10 +74,21 @@
             var date = new DateTime(year, month, day);
             var start = date.AddDays(-3);
             var end = date.AddDays(4);
-            return this.View(date);
+
+            var model = new CalendarViewModel();
+            model.Date = date;
+
+            model.Episodes = this.GetEpisodes(start, end);
+            return this.View(model);
         }
 
-        private void GetEpisodes(DateTime start, DateTime end)
+        /// <summary>
+        /// Gets the episodes that aired in a specific time span.
+        /// </summary>
+        /// <param name="start">The start.</param>
+        /// <param name="end">The end.</param>
+        /// <returns>The <see cref="IEnumerable{}"/>.</returns>
+        private CalendarEpisodeViewModel[] GetEpisodes(DateTime start, DateTime end)
         {
             var username = WebSecurity.CurrentUserName;
             var databaseQuery = this.database.Query<Episode>()
@@ -83,17 +101,17 @@
                 databaseQuery = databaseQuery.Where(x => x.Series.Followers.Any(y => y.Username == username));
             }
 
-            ////return databaseQuery.Select(x => new CalendarEntry
-            ////{
-            ////    Id = x.Id,
-            ////    Title = x.Series.Name,
-            ////    SeasonNumber = x.SeasonNumber,
-            ////    EpisodeNumber = x.EpisodeNumber,
-            ////    EpisodeTitle = x.Name,
-            ////    Class = x.FirstAired.Value >= DateTime.Today ? "event-info" : x.Viewers.Any(y => y.Username == WebSecurity.CurrentUserName) ? "event-success" : "event-important",
-            ////    EventDay = x.FirstAired.Value
-            ////})
-            ////    .ToList();
+            return databaseQuery.Select(x => new CalendarEpisodeViewModel
+                    {
+                        SeriesId = x.Series.SeriesId,
+                        SeriesName = x.Series.Name,
+                        SeasonNumber = x.SeasonNumber,
+                        EpisodeNumber = x.EpisodeNumber,
+                        EpisodeName = x.Name,
+                        FirstAired = x.FirstAired.Value,
+                        Viewed = x.Viewers.Any(y => y.Username == username)
+                    })
+                .ToArray();
         }
     }
 }

@@ -244,6 +244,8 @@
     <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\IDatabase.cs" />
     <Compile Include="Models\Series.cs" />
+    <Compile Include="ViewModels\CalendarViewModel.cs" />
+    <Compile Include="ViewModels\CalendarEpisodeViewModel.cs" />
     <Compile Include="ViewModels\SeriesDetailsViewModel.cs" />
     <Compile Include="ViewModels\SeriesIndexViewModel.cs" />
     <Compile Include="Models\Update.cs" />
