@@ -211,6 +211,7 @@
     <Compile Include="App_Start\SimpleInjectorConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="Controllers\UpdatesController.cs" />
@@ -290,6 +291,8 @@
     <Content Include="Views\Updates\Index.cshtml" />
     <Content Include="Views\Series\Index.cshtml" />
     <Content Include="Views\Series\Details.cshtml" />
+    <Content Include="Views\Calendar\Month.cshtml" />
+    <Content Include="Views\Calendar\Day.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
