@@ -21,13 +21,13 @@
     <h3>@Model.Date.ToString("D", new System.Globalization.CultureInfo("en-US"))</h3>
 </div>
 
-<table class="table table-bordered">
+<table class="table calendar">
     <thead>
         <tr>
             @for (int i = -3; i < 4; ++i)
             {
                 var currentDay = Model.Date.AddDays(i);
-                <th style="width: 14.2857%">
+                <th>
                     @currentDay.ToString("dddd", System.Globalization.CultureInfo.InvariantCulture)
                     <br />
                     <small>
@@ -50,7 +50,7 @@
                     .OrderBy(x => x.SeriesName)
                     .ThenBy(x => x.SeasonNumber)
                     .ThenBy(x => x.EpisodeNumber);
-                <td>
+                <td class="day">
                     @foreach (var episode in episodes)
                     {
                         <div style="padding-bottom: 8px">

@@ -1,15 +1,18 @@
-﻿@model DateTime
+﻿@model ShowFeed.ViewModels.CalendarViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var prev = Model.AddMonths(-1);
-    var next = Model.AddMonths(1);
+    var prev = Model.Date.AddMonths(-1);
+    var next = Model.Date.AddMonths(1);
+
+    var month = Model.Date.Month;
+    var firstDay = Model.Date; // TODO: find first monday
 }
 
 <div class="page-header">
     <div class="pull-right">
         <div class="btn-group">
-            <a href="@Url.RouteUrl("calendar/day", new { year = Model.Year, month = Model.Month, day = 1 })" class="btn btn-warning">
+            <a href="@Url.RouteUrl("calendar/day", new { year = Model.Date.Year, month = Model.Date.Month, day = 1 })" class="btn btn-warning">
                 Day
             </a>
             <button class="btn btn-warning active">Month</button>
@@ -20,5 +23,37 @@
             <a href="@Url.RouteUrl("calendar/month", new { year = next.Year, month = next.Month })" class="btn btn-success">Next >></a>
         </div>
     </div>
-    <h3>@Model.ToString("y", new System.Globalization.CultureInfo("en-US"))</h3>
+    <h3>@Model.Date.ToString("y", new System.Globalization.CultureInfo("en-US"))</h3>
+</div>
+
+<div class="calendar">
+    <div class="header">
+    @for (int i = 0; i < 7; ++i)
+    {
+        <div class="day">
+            @firstDay.AddDays(i).ToString("dddd", System.Globalization.CultureInfo.InvariantCulture)
+        </div>
+    }
+    </div>
+
+    @for (int i = 0; i < 6; ++i)
+    {
+        var firstDayOfWeek = firstDay.AddDays(i * 7);
+        if (firstDayOfWeek.Month > month)
+        {
+            break;
+        }
+        
+        <div class="week">
+            @for (int j = 0; j < 7; ++j)
+            {
+                var currentDay = firstDayOfWeek.AddDays(j);
+                <div class="day">
+                    <span class="pull-right">
+                        <a class="act" href="@Url.RouteUrl("calendar/day", new { year = currentDay.Year, month = currentDay.Month, day = currentDay.Day })">@currentDay.Day</a>
+                    </span>
+                </div>
+            }
+        </div>
+    }
 </div>
