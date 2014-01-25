@@ -6,7 +6,7 @@
     var next = Model.Date.AddMonths(1);
 
     var month = Model.Date.Month;
-    var firstDay = Model.Date; // TODO: find first monday
+    var firstDay = Model.Date.AddDays(-((((int)Model.Date.DayOfWeek) + 6) % 7));
 }
 
 <div class="page-header">
@@ -39,7 +39,7 @@
     @for (int i = 0; i < 6; ++i)
     {
         var firstDayOfWeek = firstDay.AddDays(i * 7);
-        if (firstDayOfWeek.Month > month)
+        if (firstDayOfWeek >= next)
         {
             break;
         }
@@ -48,10 +48,37 @@
             @for (int j = 0; j < 7; ++j)
             {
                 var currentDay = firstDayOfWeek.AddDays(j);
+                var start = currentDay;
+                var end = currentDay.AddDays(1);
+                var episodes = Model.Episodes
+                    .Where(x => start <= x.FirstAired && x.FirstAired < end)
+                    .OrderBy(x => x.SeriesName)
+                    .ThenBy(x => x.SeasonNumber)
+                    .ThenBy(x => x.EpisodeNumber);
                 <div class="day">
                     <span class="pull-right">
-                        <a class="act" href="@Url.RouteUrl("calendar/day", new { year = currentDay.Year, month = currentDay.Month, day = currentDay.Day })">@currentDay.Day</a>
+                        @if (currentDay.Month == month)
+                        {
+                            <a class="act" href="@Url.RouteUrl("calendar/day", new { year = currentDay.Year, month = currentDay.Month, day = currentDay.Day })">@currentDay.Day</a>
+                        }
+                        else
+                        {
+                            <a class="act disabled">@currentDay.Day</a>
+                        }  
                     </span>
+                    @foreach (var episode in episodes)
+                    {
+                        <div style="padding-bottom: 8px">
+                            <div>
+                                <a class="act act-primary" href="@Url.RouteUrl("series/details", new { id = episode.SeriesId })">
+                                    @episode.SeriesName
+                                </a>
+                            </div>
+                            <div>
+                                @episode.EpisodeDescription
+                            </div>
+                        </div>
+                    }
                 </div>
             }
         </div>
