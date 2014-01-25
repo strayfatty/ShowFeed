@@ -65,7 +65,7 @@
 .act.disabled,
 .act[disabled] {
   color: #AAAAAA;
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .act.disabled:hover,

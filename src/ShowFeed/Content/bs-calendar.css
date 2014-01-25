@@ -1,0 +1,47 @@
+﻿.calendar .day {
+    width: 14.2857%;
+}
+
+.calendar .header .day {
+    font-weight: bold;
+    float: left;
+    padding: 8px;
+}
+
+.calendar .week .day {
+    float: left;
+    min-height: 100px;
+    padding: 8px;
+}
+
+.calendar .header:before,
+.calendar .header:after {
+  display: table;
+  content: "";
+}
+
+.calendar .week:before,
+.calendar .week:after {
+  display: table;
+  content: "";
+}
+
+.calendar .header:after {
+  clear: both;
+}
+
+.calendar .week:after {
+  clear: both;
+}
+
+.calendar .week:hover {
+  background-color: #fafafa;
+}
+
+.calendar .week .day:hover {
+  background-color: #ededed;
+}
+
+.table.calendar .day {
+    border: 1px solid #dddddd;
+}
