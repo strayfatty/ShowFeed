@@ -47,17 +47,6 @@
         }
 
         /// <summary>
-        /// The upcoming view.
-        /// </summary>
-        /// <returns>An action result.</returns>
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult Calendar()
-        {
-            return this.View();
-        }
-
-        /// <summary>
         /// The following view.
         /// </summary>
         /// <returns>An action result.</returns>

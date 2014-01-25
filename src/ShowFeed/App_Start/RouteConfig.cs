@@ -22,9 +22,9 @@
 
             routes.MapRoute("calendar/day", "calendar/{year}/{month}/{day}", new { controller = "Calendar", action = "Day" });
             routes.MapRoute("calendar/month", "calendar/{year}/{month}", new { controller = "Calendar", action = "Month" });
+            routes.MapRoute("calendar", "calendar", new { controller = "Calendar", action = "Index" });
             
             routes.MapRoute("home", string.Empty, new { controller = "Home", action = "Index" });
-            routes.MapRoute("calendar", "calendar", new { controller = "Home", action = "Calendar" });
             routes.MapRoute("following", "following", new { controller = "Home", action = "Following" });
             routes.MapRoute("searchseries", "searchseries", new { controller = "Home", action = "SearchSeries" });
 

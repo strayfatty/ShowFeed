@@ -37,7 +37,15 @@
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return this.RedirectToAction("Day", new { year = DateTime.Today.Year, month = DateTime.Today.Month, day = DateTime.Today.Day });
+            var date = DateTime.Today;
+            var start = date.AddDays(-3);
+            var end = date.AddDays(4);
+
+            var model = new CalendarViewModel();
+            model.Date = date;
+
+            model.Episodes = this.GetEpisodes(start, end);
+            return this.View("Day", model);
         }
 
         /// <summary>

@@ -165,19 +165,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bs-sidebar.css" />
-    <Content Include="Content\calendar.css" />
-    <Content Include="Content\calendar.min.css" />
     <Content Include="Content\img\dark_wood.png" />
     <Content Include="Content\img\slide-bg.png" />
     <Content Include="Content\img\tick.png" />
-    <Content Include="Content\tmpls\day.html" />
-    <Content Include="Content\tmpls\events-list.html" />
-    <Content Include="Content\tmpls\month-day.html" />
-    <Content Include="Content\tmpls\month.html" />
-    <Content Include="Content\tmpls\week-days.html" />
-    <Content Include="Content\tmpls\week.html" />
-    <Content Include="Content\tmpls\year-month.html" />
-    <Content Include="Content\tmpls\year.html" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -186,22 +176,14 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
-    <Content Include="Scripts\calendar.js" />
-    <Content Include="Scripts\calendar.min.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\custom.js" />
-    <Content Include="Scripts\underscore.js" />
-    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\CalendarApiController.cs" />
-    <Compile Include="Api\Model\CalendarEntry.cs" />
-    <Compile Include="Api\Model\CalendarQuery.cs" />
-    <Compile Include="Api\Model\CalendarQueryResult.cs" />
     <Compile Include="Api\SeriesApiController.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -287,8 +269,6 @@
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
-    <Content Include="Scripts\underscore.min.map" />
-    <Content Include="Views\Home\Calendar.cshtml" />
     <Content Include="Views\Home\Following.cshtml" />
     <Content Include="Views\Home\SearchSeries.cshtml" />
     <Content Include="Views\Updates\Index.cshtml" />
