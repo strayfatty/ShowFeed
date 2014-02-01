@@ -16,7 +16,7 @@
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-actionlinks.css",
-                "~/Content/bs-sidebar.css",
+                "~/Content/bs-navbar.css",
                 "~/Content/bs-calendar.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/js").Include(

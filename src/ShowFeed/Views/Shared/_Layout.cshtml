@@ -8,55 +8,60 @@
     @RenderSection("css", false)
 </head>
 <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#nav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.RouteUrl("home")">ShowFeed</a>
+            </div>
+            <div id="nav" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="@Url.RouteClass("calendar", "calendar/day", "calendar/month")">
+                        <a href="@Url.RouteUrl("calendar")"><span class="glyphicon glyphicon-calendar"></span> Calendar</a>
+                    </li>
+                    <li class="@Url.RouteClass("series")">
+                        <a href="@Url.RouteUrl("series")"><span class="glyphicon glyphicon-film"></span> Series</a>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-tasks"></span> Watch Later</a>
+                        </li>
+                        <li  class="@Url.RouteClass("following")">
+                            <a href="@Url.RouteUrl("following")"><span class="glyphicon glyphicon-bookmark"></span> Following</a>
+                        </li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="@Url.RouteClass("logout")">
+                            <a href="@Url.RouteUrl("logout")">Log Out</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="@Url.RouteClass("login")">
+                            <a href="@Url.RouteUrl("login")">Log In</a>
+                        </li>
+                        <li class="@Url.RouteClass("signup")">
+                            <a href="@Url.RouteUrl("signup")">Sign Up</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <div class="bs-sidebar" data-spy="affix">
-                    <ul class="nav bs-sidenav">
-                        <li>
-                            <a href="@Url.RouteUrl("home")"><h3>ShowFeed <small>beta</small></h3></a>
-                        </li>
-                    </ul>
-                    <ul class="nav bs-sidenav">
-                        <li class="@Url.RouteClass("calendar", "calendar/day", "calendar/month")">
-                            <a href="@Url.RouteUrl("calendar")"><span class="glyphicon glyphicon-calendar"></span> Calendar</a>
-                        </li>
-                        <li class="@Url.RouteClass("series")">
-                            <a href="@Url.RouteUrl("series")"><span class="glyphicon glyphicon-film"></span> Series</a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>
-                                <a href="#"><span class="glyphicon glyphicon-tasks"></span> Watch Later</a>
-                            </li>
-                            <li  class="@Url.RouteClass("following")">
-                                <a href="@Url.RouteUrl("following")"><span class="glyphicon glyphicon-bookmark"></span> Following</a>
-                            </li>
-                        }
-                    </ul>
-                    <ul class="nav bs-sidenav">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="@Url.RouteClass("logout")">
-                                <a href="@Url.RouteUrl("logout")">Log Out</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="@Url.RouteClass("login")">
-                                <a href="@Url.RouteUrl("login")">Log In</a>
-                            </li>
-                            <li class="@Url.RouteClass("signup")">
-                                <a href="@Url.RouteUrl("signup")">Sign Up</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-            <div id="content" class="col-md-9">
-                <div class="row">
-                    @RenderBody()
-                </div>
+            <div id="content" class="col-md-12">
+                @RenderBody()
             </div>
         </div>
     </div>
