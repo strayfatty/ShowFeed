@@ -41,10 +41,36 @@
     @foreach (var season in seasons)
     {
         <div id="s@(season.Key == 0 ? "pecials" : season.Key.ToString())" class="tab-pane @(season.Key == 1 ? "active" : string.Empty)">
-            @foreach (var episode in season)
-            {
-                <text>@episode.Name</text><br />
-            }
+            <br />
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 3em; text-align: center">No.</th>
+                        <th style="text-align: center">Title</th>
+                        <th style="width: 12em; text-align: center">Original airdate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var episode in season)
+                    {
+                        <tr>
+                            <td style="text-align: center">@episode.EpisodeNumber</td>
+                            <td>
+                                @episode.Name
+                            </td>
+                            <td style="text-align: center">
+                                @if (episode.FirstAired.HasValue)
+                                {
+                                    <text>@episode.FirstAired.Value.ToString("MMMM d, yyyy", new System.Globalization.CultureInfo("en-US"))</text>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border-bottom-width: 3px">@episode.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     }
 </div>
