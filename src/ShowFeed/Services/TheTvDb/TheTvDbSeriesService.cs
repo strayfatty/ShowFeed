@@ -9,7 +9,7 @@
     using System.Net;
     using System.Xml.Serialization;
 
-    using ShowFeed.Api.Model;
+    using ShowFeed.Controllers;
     using ShowFeed.Models;
 
     using StackExchange.Profiling;
@@ -136,7 +136,7 @@
         /// <returns>The <see cref="string"/>.</returns>
         private static string GetUpdateType(int lastUpdate)
         {
-            var timeSpan = DateTime.UtcNow - CalendarEntry.Epoch.AddSeconds(lastUpdate);
+            var timeSpan = DateTime.UtcNow - UpdatesController.Epoch.AddSeconds(lastUpdate);
             if (timeSpan.TotalHours < 24.0)
             {
                 return "day";

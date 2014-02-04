@@ -9,7 +9,6 @@
 
     using MoreLinq;
 
-    using ShowFeed.Api.Model;
     using ShowFeed.Models;
     using ShowFeed.Services;
     using ShowFeed.ViewModels;
@@ -21,6 +20,11 @@
     /// </summary>
     public class UpdatesController : Controller
     {
+        /// <summary>
+        /// The epoch time.
+        /// </summary>
+        public static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
         /// <summary>
         /// The database.
         /// </summary>
@@ -66,7 +70,7 @@
                 .Select(x => new UpdatesIndexViewModel.Update
                 {
                     Id = x.Id,
-                    Started = CalendarEntry.Epoch.AddSeconds(x.Started),
+                    Started = Epoch.AddSeconds(x.Started),
                     Duration = new TimeSpan(0, 0, x.Finished - x.Started),
                     NumberOfSeriesUpdated = x.NumberOfSeriesUpdated,
                     NumberOfEpisodesUpdated = x.NumberOfEpisodesUpdated
@@ -88,11 +92,11 @@
                 .FirstOrDefault();
 
             var startTime = DateTime.UtcNow;
-            var offset = (int)(startTime.AddHours(-1) - CalendarEntry.Epoch).TotalSeconds;
+            var offset = (int)(startTime.AddHours(-1) - Epoch).TotalSeconds;
             if (lastUpdate == null || lastUpdate.Started < offset)
             {
                 var update = new Update();
-                update.Started = (int)(startTime - CalendarEntry.Epoch).TotalSeconds;
+                update.Started = (int)(startTime - Epoch).TotalSeconds;
 
                 var updateData = this.seriesService.GetUpdateData(lastUpdate != null ? lastUpdate.UpdateTime : 0);
 
@@ -102,7 +106,7 @@
                     .Batch(100)
                     .ForEach(x => this.UpdateBatch(update, updateData, x));
 
-                update.Finished = (int)(DateTime.UtcNow - CalendarEntry.Epoch).TotalSeconds;
+                update.Finished = (int)(DateTime.UtcNow - Epoch).TotalSeconds;
                 update.UpdateTime = updateData.UpdateTime;
 
                 this.database.Store(update);

@@ -16,14 +16,12 @@
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-actionlinks.css",
-                "~/Content/bs-sidebar.css",
-                "~/Content/calendar.css"));
+                "~/Content/bs-navbar.css",
+                "~/Content/bs-calendar.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/js").Include(
                 "~/Scripts/jquery-2.0.3.js",
-                "~/Scripts/underscore.js",
                 "~/Scripts/bootstrap.js",
-                "~/Scripts/calendar.js",
                 "~/Scripts/custom.js"));
 
             ////Set EnableOptimizations to true to test bundles while debugging.

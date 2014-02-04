@@ -1,0 +1,73 @@
+﻿@model ShowFeed.ViewModels.CalendarViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "calendar";
+
+    var prev = Model.Date.AddDays(-1);
+    var next = Model.Date.AddDays(1);
+}
+
+<div class="page-header">
+    <div class="pull-right">
+        <div class="btn-group">
+            <button class="btn btn-warning active">Day</button>
+            <a href="@Url.RouteUrl("calendar/month", new { year = Model.Date.Year, month = Model.Date.Month })" class="btn btn-warning">Month</a>
+        </div>
+        <div class="btn-group">
+            <a href="@Url.RouteUrl("calendar/day", new { year = prev.Year, month = prev.Month, day = prev.Day })" class="btn btn-success"><< Prev</a>
+            <a href="@Url.RouteUrl("calendar")" class="btn btn-primary">Today</a>
+            <a href="@Url.RouteUrl("calendar/day", new { year = next.Year, month = next.Month, day = next.Day })" class="btn btn-success">Next >></a>
+        </div>
+    </div>
+    <h3>@Model.Date.ToString("D", new System.Globalization.CultureInfo("en-US"))</h3>
+</div>
+
+<table class="table calendar">
+    <thead>
+        <tr>
+            @for (int i = -3; i < 4; ++i)
+            {
+                var currentDay = Model.Date.AddDays(i);
+                <th>
+                    @currentDay.ToString("dddd", System.Globalization.CultureInfo.InvariantCulture)
+                    <br />
+                    <small>
+                        <a class="act" href="@Url.RouteUrl("calendar/day", new { year = currentDay.Year, month = currentDay.Month, day = currentDay.Day })">
+                            @currentDay.ToString("d MMM", System.Globalization.CultureInfo.InvariantCulture)
+                        </a>
+                    </small>
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @for (int i = -3; i < 4; ++i)
+            {
+                var start = Model.Date.AddDays(i);
+                var end = Model.Date.AddDays(i + 1);
+                var episodes = Model.Episodes
+                    .Where(x => start <= x.FirstAired && x.FirstAired < end)
+                    .OrderBy(x => x.SeriesName)
+                    .ThenBy(x => x.SeasonNumber)
+                    .ThenBy(x => x.EpisodeNumber);
+                <td class="day">
+                    @foreach (var episode in episodes)
+                    {
+                        <div style="padding-bottom: 8px">
+                            <div>
+                                <a class="act act-primary" href="@Url.RouteUrl("series/details", new { id = episode.SeriesId })">
+                                    @episode.SeriesName
+                                </a>
+                            </div>
+                            <div>
+                                @episode.EpisodeDescription
+                            </div>
+                        </div>
+                    }
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
