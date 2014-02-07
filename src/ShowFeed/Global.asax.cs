@@ -48,7 +48,10 @@
         /// <param name="args">The event arguments.</param>
         protected void Application_BeginRequest(object sender, EventArgs args)
         {
-            MiniProfiler.Start();
+            if (this.Request.IsLocal)
+            {
+                MiniProfiler.Start();
+            }
         }
 
         /// <summary>
