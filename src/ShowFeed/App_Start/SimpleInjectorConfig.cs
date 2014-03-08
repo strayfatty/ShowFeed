@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Web;
     using System.Web.Http;
     using System.Web.Http.Dependencies;
     using System.Web.Mvc;
@@ -12,6 +13,7 @@
     using ShowFeed.Services.TheTvDb;
 
     using SimpleInjector;
+    using SimpleInjector.Extensions.LifetimeScoping;
     using SimpleInjector.Integration.Web;
     using SimpleInjector.Integration.Web.Mvc;
 
@@ -26,12 +28,16 @@
         public static void RegisterDependencies()
         {
             var container = new Container();
+            var hybridLifeStyle = Lifestyle.CreateHybrid(
+                () => HttpContext.Current != null,
+                new WebRequestLifestyle(),
+                new LifetimeScopeLifestyle());
 
             container.RegisterMvcControllers(typeof(SimpleInjectorConfig).Assembly);
             container.RegisterMvcAttributeFilterProvider();
 
-            container.Register<IDatabase, ShowFeedDatabase>(new WebRequestLifestyle());
-            container.Register<ISeriesService, TheTvDbSeriesService>(new WebRequestLifestyle());
+            container.Register<IDatabase, ShowFeedDatabase>(hybridLifeStyle);
+            container.Register<ISeriesService, TheTvDbSeriesService>(hybridLifeStyle);
 
             container.Verify();
 
