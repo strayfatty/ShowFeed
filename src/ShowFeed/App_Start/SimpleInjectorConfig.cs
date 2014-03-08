@@ -46,6 +46,16 @@
         }
 
         /// <summary>
+        /// Begins a lifetime scope.
+        /// </summary>
+        /// <returns>The <see cref="LifetimeScope"/>.</returns>
+        public static LifetimeScope BeginLifetimeScope()
+        {
+            var resolver = (SimpleInjectorDependencyResolver)DependencyResolver.Current;
+            return resolver.Container.BeginLifetimeScope();
+        }
+
+        /// <summary>
         /// The web API dependency resolver.
         /// </summary>
         public sealed class WebApiDependencyResolver : System.Web.Http.Dependencies.IDependencyResolver

@@ -10,6 +10,7 @@
     using Newtonsoft.Json.Serialization;
 
     using ShowFeed.App_Start;
+    using ShowFeed.Jobs;
 
     using StackExchange.Profiling;
 
@@ -39,6 +40,8 @@
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            Job.Queue(new UpdateJob());
         }
 
         /// <summary>

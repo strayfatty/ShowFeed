@@ -209,6 +209,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\IJob.cs" />
+    <Compile Include="Jobs\IRecurringJob.cs" />
+    <Compile Include="Jobs\Job.cs" />
+    <Compile Include="Jobs\UpdateJob.cs" />
     <Compile Include="Migrations\201312261448321_AddUser.cs" />
     <Compile Include="Migrations\201312261448321_AddUser.Designer.cs">
       <DependentUpon>201312261448321_AddUser.cs</DependentUpon>
