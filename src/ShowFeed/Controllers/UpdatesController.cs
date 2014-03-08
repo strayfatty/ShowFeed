@@ -68,5 +68,33 @@
 
             return this.View(model);
         }
+
+        /// <summary>
+        /// The details view.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>The <see cref="ActionResult"/>.</returns>
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var update = this.database.Load<Update>(id);
+
+            var model = new UpdatesDetailsViewModel();
+            model.Started = UpdateJob.Epoch.AddSeconds(update.Started);
+
+            model.Episodes = this.database.Query<Episode>()
+                .Where(x => x.Updates.Any(y => y.Id == id))
+                .Select(x => new UpdatesDetailsViewModel.Episode
+                {
+                    SeriesId = x.Series.SeriesId,
+                    SeriesName = x.Series.Name,
+                    SeasonNumber = x.SeasonNumber,
+                    EpisodeNumber = x.EpisodeNumber,
+                    EpisodeName = x.Name
+                })
+                .ToArray();
+
+            return this.View(model);
+        }
     }
 }

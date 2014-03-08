@@ -3,12 +3,8 @@
     using System;
     using System.Web;
     using System.Web.Caching;
-    using System.Web.Mvc;
 
     using ShowFeed.App_Start;
-
-    using SimpleInjector;
-    using SimpleInjector.Integration.Web.Mvc;
 
     /// <summary>
     /// The job.

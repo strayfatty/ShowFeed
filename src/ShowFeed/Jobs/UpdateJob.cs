@@ -98,6 +98,8 @@
                             update.Episodes.Add(episode);
                         }
                     }
+
+                    database.SaveChanges();
                 }
             }
 

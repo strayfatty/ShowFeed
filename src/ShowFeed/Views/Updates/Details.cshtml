@@ -1,0 +1,27 @@
+﻿@model ShowFeed.ViewModels.UpdatesDetailsViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "updates";
+
+    var groups = Model.Episodes.GroupBy(x => x.SeriesId).OrderBy(x => x.First().SeriesName);
+}
+
+<div class="page-header">
+    <h3>Update: @Model.Started</h3>
+</div>
+
+@foreach (var series in Model.Episodes.GroupBy(x => x.SeriesId).OrderBy(x => x.First().SeriesName))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="@Url.RouteUrl("series/details", new { id = series.Key })">@series.First().SeriesName</a>
+        </div>
+        <ul class="list-group">
+            @foreach (var episode in series.OrderBy(x => x.SeasonNumber).ThenBy(x => x.EpisodeNumber))
+            {
+                <li class="list-group-item">@string.Format("S{0:00}E{1:00} {2}", episode.SeasonNumber, episode.EpisodeNumber, episode.EpisodeName)</li>
+            }
+        </ul>
+    </div>
+}

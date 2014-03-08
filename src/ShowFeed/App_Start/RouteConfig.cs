@@ -31,8 +31,8 @@
             routes.MapRoute("series/details", "series/{id}", new { controller = "Series", action = "Details" });
             routes.MapRoute("series", "series", new { controller = "Series", action = "Index" });
 
+            routes.MapRoute("updates/details", "updates/{id}", new { controller = "Updates", action = "Details" });
             routes.MapRoute("updates", "updates", new { controller = "Updates", action = "Index" });
-            routes.MapRoute("updates/new", "updates/new", new { controller = "Updates", action = "New" });
         }
     }
 }
