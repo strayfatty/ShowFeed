@@ -10,6 +10,15 @@
     public class Update : Entity
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Update"/> class.
+        /// </summary>
+        public Update()
+        {
+            this.Series = new List<Series>();
+            this.Episodes = new List<Episode>();
+        }
+
+        /// <summary>
         /// Gets or sets the time when the update started as a unix time stamp.
         /// </summary>
         public virtual int Started { get; set; }

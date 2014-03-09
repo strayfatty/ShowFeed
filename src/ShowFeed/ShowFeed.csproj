@@ -73,17 +73,24 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector">
-      <HintPath>..\..\lib\SimpleInjector.2.4.0\lib\net45\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=2.5.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SimpleInjector.2.5.0\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector.Diagnostics">
-      <HintPath>..\..\lib\SimpleInjector.2.4.0\lib\net45\SimpleInjector.Diagnostics.dll</HintPath>
+    <Reference Include="SimpleInjector.Diagnostics, Version=2.5.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SimpleInjector.2.5.0\lib\net45\SimpleInjector.Diagnostics.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector.Integration.Web">
-      <HintPath>..\..\lib\SimpleInjector.Integration.Web.2.4.0\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    <Reference Include="SimpleInjector.Extensions.LifetimeScoping">
+      <HintPath>..\..\lib\SimpleInjector.Extensions.LifetimeScoping.2.5.0\lib\net40-client\SimpleInjector.Extensions.LifetimeScoping.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector.Integration.Web.Mvc">
-      <HintPath>..\..\lib\SimpleInjector.Integration.Web.Mvc.2.4.0\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+    <Reference Include="SimpleInjector.Integration.Web, Version=2.5.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SimpleInjector.Integration.Web.2.5.0\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=2.5.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SimpleInjector.Integration.Web.Mvc.2.5.0\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
@@ -202,6 +209,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\IJob.cs" />
+    <Compile Include="Jobs\IRecurringJob.cs" />
+    <Compile Include="Jobs\Job.cs" />
+    <Compile Include="Jobs\UpdateJob.cs" />
     <Compile Include="Migrations\201312261448321_AddUser.cs" />
     <Compile Include="Migrations\201312261448321_AddUser.Designer.cs">
       <DependentUpon>201312261448321_AddUser.cs</DependentUpon>
@@ -229,6 +240,7 @@
     <Compile Include="Models\Series.cs" />
     <Compile Include="ViewModels\CalendarViewModel.cs" />
     <Compile Include="ViewModels\CalendarEpisodeViewModel.cs" />
+    <Compile Include="ViewModels\UpdatesDetailsViewModel.cs" />
     <Compile Include="ViewModels\SeriesDetailsViewModel.cs" />
     <Compile Include="ViewModels\SeriesIndexViewModel.cs" />
     <Compile Include="Models\Update.cs" />
@@ -276,6 +288,7 @@
     <Content Include="Views\Series\Details.cshtml" />
     <Content Include="Views\Calendar\Month.cshtml" />
     <Content Include="Views\Calendar\Day.cshtml" />
+    <Content Include="Views\Updates\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
