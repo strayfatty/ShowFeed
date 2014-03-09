@@ -6,7 +6,6 @@
 
     using ShowFeed.Jobs;
     using ShowFeed.Models;
-    using ShowFeed.Services;
     using ShowFeed.ViewModels;
 
     /// <summary>
@@ -20,19 +19,12 @@
         private readonly IDatabase database;
 
         /// <summary>
-        /// The series service.
-        /// </summary>
-        private readonly ISeriesService seriesService;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdatesController"/> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        /// <param name="seriesService">The series service.</param>
-        public UpdatesController(IDatabase database, ISeriesService seriesService)
+        public UpdatesController(IDatabase database)
         {
             this.database = database;
-            this.seriesService = seriesService;
         }
 
         /// <summary>

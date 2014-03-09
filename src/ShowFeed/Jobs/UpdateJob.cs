@@ -39,6 +39,9 @@
         /// </summary>
         public void Run()
         {
+            var update = new Update();
+            update.Started = (int)(DateTime.UtcNow - Epoch).TotalSeconds;
+
             var database = DependencyResolver.Current.GetService<IDatabase>();
             var seriesService = DependencyResolver.Current.GetService<ISeriesService>();
 
@@ -46,9 +49,6 @@
                 .OrderByDescending(x => x.Started)
                 .Select(x => x.UpdateTime)
                 .FirstOrDefault();
-
-            var update = new Update();
-            update.Started = (int)(DateTime.UtcNow - Epoch).TotalSeconds;
 
             var updateData = seriesService.GetUpdateData(lastUpdateTime);
             update.UpdateTime = updateData.UpdateTime;
