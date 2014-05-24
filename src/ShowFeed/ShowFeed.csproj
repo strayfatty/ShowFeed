@@ -191,6 +191,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\EpisodesApiController.cs" />
     <Compile Include="Api\SeriesApiController.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

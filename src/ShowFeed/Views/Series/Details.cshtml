@@ -48,6 +48,10 @@
                         <th style="width: 3em; text-align: center">No.</th>
                         <th style="text-align: center">Title</th>
                         <th style="width: 12em; text-align: center">Original airdate</th>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <th style="width: 3em"></th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -64,9 +68,26 @@
                                     <text>@episode.FirstAired.Value.ToString("MMMM d, yyyy", new System.Globalization.CultureInfo("en-US"))</text>
                                 }
                             </td>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <td>
+                                    @if (episode.Viewed)
+                                     {
+                                         <button type="button" class="btn btn-success btn-xs pull-right" data-episodeid="@episode.EpisodeId">
+                                             <span class="glyphicon glyphicon-check"></span>
+                                         </button>
+                                     }
+                                     else
+                                     {
+                                         <button type="button" class="btn btn-primary btn-xs pull-right" data-episodeid="@episode.EpisodeId">
+                                             <span class="glyphicon glyphicon-unchecked"></span>
+                                         </button>
+                                     }
+                                </td>
+                            }
                         </tr>
                         <tr>
-                            <td colspan="3" style="border-bottom-width: 3px">@episode.Description</td>
+                            <td colspan="4" style="border-bottom-width: 3px">@episode.Description</td>
                         </tr>
                     }
                 </tbody>
@@ -74,3 +95,49 @@
         </div>
     }
 </div>
+
+
+@section scripts {
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script type="text/javascript">
+            (function(window, undefined) {
+                $("body").on("click", ".btn-primary", function(event) {
+                    var button = $(event.target).closest(".btn-primary");
+                    button.attr("disabled", true);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "@Url.HttpRouteUrl("api/episodes", new { @id = "" })/" + button.data("episodeid"),
+                        success: function() {
+                            button.toggleClass("btn-primary btn-success");
+                            button.children(".glyphicon-unchecked").toggleClass("glyphicon-unchecked glyphicon-check");
+                            button.attr("disabled", false);
+                        },
+                        error: function() {
+                            button.attr("disabled", false);
+                        }
+                    });
+                });
+
+                $("body").on("click", ".btn-success", function(event) {
+                    var button = $(event.target).closest(".btn-success");
+                    button.attr("disabled", true);
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: "@Url.HttpRouteUrl("api/episodes", new { @id = "" })/" + button.data("episodeid"),
+                        success: function() {
+                            button.toggleClass("btn-success btn-primary");
+                            button.children(".glyphicon-check").toggleClass("glyphicon-check glyphicon-unchecked");
+                            button.attr("disabled", false);
+                        },
+                        error: function() {
+                            button.attr("disabled", false);
+                        }
+                    });
+                });
+            })(window);
+        </script>
+    }
+}

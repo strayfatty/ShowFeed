@@ -1,10 +1,14 @@
 ﻿namespace ShowFeed.App_Start
 {
+    using System.Linq;
+
     using AutoMapper;
 
     using ShowFeed.Models;
     using ShowFeed.Services;
     using ShowFeed.ViewModels;
+
+    using WebMatrix.WebData;
 
     /// <summary>
     /// The AutoMapper configuration class.
@@ -20,7 +24,8 @@
             Mapper.CreateMap<IBaseEpisodeRecord, Episode>();
 
             Mapper.CreateMap<Series, SeriesDetailsViewModel>();
-            Mapper.CreateMap<Episode, SeriesDetailsViewModel.Episode>();
+            Mapper.CreateMap<Episode, SeriesDetailsViewModel.Episode>()
+                .ForMember(dest => dest.Viewed, opt => opt.MapFrom(src => src.Viewers.Any(x => x.Username == WebSecurity.CurrentUserName)));
         }
     }
 }
