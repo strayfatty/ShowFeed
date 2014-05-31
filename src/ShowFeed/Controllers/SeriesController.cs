@@ -47,6 +47,8 @@
                         SeriesId = x.SeriesId,
                         Name = x.Name,
                         Description = x.Description,
+                        NumberOfEpisodes = x.Episodes.Count(),
+                        NumberOfViewedEpisodes = x.Episodes.Count(y => y.Viewers.Any(z => z.Username == WebSecurity.CurrentUserName)),
                         Following = x.Followers.Any(y => y.Username == WebSecurity.CurrentUserName)
                     })
                 .ToArray();

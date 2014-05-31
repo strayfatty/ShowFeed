@@ -14,6 +14,7 @@
         <tr>
             <th class="min-col-width"></th>
             <th>Name</th>
+            <th class="min-col-width">@(User.Identity.IsAuthenticated ? "Viewed" : "Episodes")</th>
             @if (User.Identity.IsAuthenticated)
             {
                 <th class="min-col-width"></th>
@@ -27,6 +28,13 @@
                 <td data-row-details-id="@series.SeriesId"><i class="glyphicon glyphicon-chevron-right"></i></td>
                 <td>
                     <a class="act act-primary" href="@Url.RouteUrl("series/details", new { id = series.SeriesId })">@series.Name</a>
+                </td>
+                <td class="text-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <text>@series.NumberOfViewedEpisodes /</text>
+                    }
+                    @series.NumberOfEpisodes
                 </td>
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -47,7 +55,7 @@
                 }
             </tr>
             <tr id="@series.SeriesId" class="collapse">
-                <td colspan="3">@series.Description</td>
+                <td colspan="4">@series.Description</td>
             </tr>
         }
     </tbody>

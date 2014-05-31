@@ -39,6 +39,16 @@
             public string Description { get; set; }
 
             /// <summary>
+            /// Gets or sets the number of episodes.
+            /// </summary>
+            public int NumberOfEpisodes { get; set; }
+
+            /// <summary>
+            /// Gets or sets the number of viewed episodes.
+            /// </summary>
+            public int NumberOfViewedEpisodes { get; set; }
+
+            /// <summary>
             /// Gets or sets a value indicating whether the user is 
             /// already following the show.
             /// </summary>
