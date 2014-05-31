@@ -23,9 +23,8 @@
             Mapper.CreateMap<IBaseSeriesRecord, Series>();
             Mapper.CreateMap<IBaseEpisodeRecord, Episode>();
 
-            Mapper.CreateMap<Series, SeriesDetailsViewModel>();
-            Mapper.CreateMap<Episode, SeriesDetailsViewModel.Episode>()
-                .ForMember(dest => dest.Viewed, opt => opt.MapFrom(src => src.Viewers.Any(x => x.Username == WebSecurity.CurrentUserName)));
+            Mapper.CreateMap<Series, SeriesDetailsViewModel>()
+                .ForMember(dest => dest.Episodes, opt => opt.Ignore());
         }
     }
 }
