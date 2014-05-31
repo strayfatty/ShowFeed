@@ -46,6 +46,7 @@
                     {
                         SeriesId = x.SeriesId,
                         Name = x.Name,
+                        Description = x.Description,
                         Following = x.Followers.Any(y => y.Username == WebSecurity.CurrentUserName)
                     })
                 .ToArray();

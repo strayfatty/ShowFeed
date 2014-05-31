@@ -9,39 +9,55 @@
     <h3>Series</h3>
 </div>
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th class="min-col-width"></th>
+            <th>Name</th>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <th class="min-col-width"></th>
+            }
+        </tr>
+    </thead>
     <tbody>
         @foreach (var series in Model.Entries.OrderBy(x => x.Name))
         {
             <tr>
+                <td data-row-details-id="@series.SeriesId"><i class="glyphicon glyphicon-chevron-right"></i></td>
                 <td>
                     <a class="act act-primary" href="@Url.RouteUrl("series/details", new { id = series.SeriesId })">@series.Name</a>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        if (series.Following)
-                         {
-                             <button type="button" class="btn btn-success btn-xs pull-right" data-seriesid="@series.SeriesId">
-                                 <span class="glyphicon glyphicon-check"></span>
-                             </button>
-                         }
-                         else
-                         {
-                             <button type="button" class="btn btn-primary btn-xs pull-right" data-seriesid="@series.SeriesId">
-                                 <span class="glyphicon glyphicon-unchecked"></span>
-                             </button>
-                         }
-                    }
                 </td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td>
+                        @if (series.Following)
+                            {
+                                <button type="button" class="btn btn-success btn-xs pull-right" data-seriesid="@series.SeriesId">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary btn-xs pull-right" data-seriesid="@series.SeriesId">
+                                    <span class="glyphicon glyphicon-unchecked"></span>
+                                </button>
+                            }
+                    </td>
+                }
+            </tr>
+            <tr id="@series.SeriesId" class="collapse">
+                <td colspan="3">@series.Description</td>
             </tr>
         }
     </tbody>
 </table>
 
 @section scripts {
-    @if (User.Identity.IsAuthenticated)
-    {
-        <script type="text/javascript">
-            initToggleButtons("@Url.HttpRouteUrl("api/series", new { @id = "" })", "seriesid")
-        </script>
-    }
+    <script type="text/javascript">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <text>initToggleButtons("@Url.HttpRouteUrl("api/series", new { @id = "" })", "seriesid");</text>
+        }
+    </script>
 }

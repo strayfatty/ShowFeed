@@ -34,6 +34,11 @@
             public string Name { get; set; }
 
             /// <summary>
+            /// Gets or sets the description.
+            /// </summary>
+            public string Description { get; set; }
+
+            /// <summary>
             /// Gets or sets a value indicating whether the user is 
             /// already following the show.
             /// </summary>

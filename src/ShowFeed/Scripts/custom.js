@@ -39,3 +39,14 @@ window.initToggleButtons = function (apiUrl, dataId) {
         });
     });
 };
+
+$("table").on("click", "td[data-row-details-id]", function () {
+    var rowDetailsId = $(this).data("row-details-id");
+    var icon = $(this).children("i");
+    var detailsRow = $('#' + rowDetailsId);
+
+    detailsRow.toggle(0, function () {
+        icon.toggleClass("glyphicon-chevron-right");
+        icon.toggleClass("glyphicon-chevron-down");
+    });
+});
