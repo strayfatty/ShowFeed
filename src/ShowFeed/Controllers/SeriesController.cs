@@ -46,6 +46,9 @@
                     {
                         SeriesId = x.SeriesId,
                         Name = x.Name,
+                        Description = x.Description,
+                        NumberOfEpisodes = x.Episodes.Count(),
+                        NumberOfViewedEpisodes = x.Episodes.Count(y => y.Viewers.Any(z => z.Username == WebSecurity.CurrentUserName)),
                         Following = x.Followers.Any(y => y.Username == WebSecurity.CurrentUserName)
                     })
                 .ToArray();
@@ -69,6 +72,20 @@
             }
 
             var model = Mapper.Map<SeriesDetailsViewModel>(series);
+            model.Episodes = this.database.Query<Episode>()
+                .Where(x => x.Series.Id == series.Id)
+                .Select(x => new SeriesDetailsViewModel.Episode
+                    {
+                        EpisodeId = x.EpisodeId,
+                        SeasonNumber = x.SeasonNumber,
+                        EpisodeNumber = x.EpisodeNumber,
+                        Name = x.Name,
+                        Description = x.Description,
+                        FirstAired = x.FirstAired,
+                        Viewed = x.Viewers.Any(y => y.Username == WebSecurity.CurrentUserName)
+                    })
+                .ToArray();
+
             return this.View(model);
         }
     }

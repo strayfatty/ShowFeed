@@ -66,6 +66,11 @@
             /// Gets or sets the first aired date.
             /// </summary>
             public virtual DateTime? FirstAired { get; set; }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether viewed.
+            /// </summary>
+            public virtual bool Viewed { get; set; }
         }
     }
 }

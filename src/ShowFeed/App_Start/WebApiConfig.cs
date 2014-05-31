@@ -15,6 +15,7 @@
         {
             routes.MapHttpRoute("api/calendar", "api/calendar", new { controller = "CalendarApi" });
             routes.MapHttpRoute("api/series", "api/series/{id}", new { controller = "SeriesApi", id = RouteParameter.Optional });
+            routes.MapHttpRoute("api/episodes", "api/episodes/{id}", new { controller = "EpisodesApi", id = RouteParameter.Optional });
         }
     }
 }

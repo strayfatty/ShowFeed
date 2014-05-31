@@ -9,29 +9,53 @@
     <h3>Series</h3>
 </div>
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th class="min-col-width"></th>
+            <th>Name</th>
+            <th class="min-col-width">@(User.Identity.IsAuthenticated ? "Viewed" : "Episodes")</th>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <th class="min-col-width"></th>
+            }
+        </tr>
+    </thead>
     <tbody>
         @foreach (var series in Model.Entries.OrderBy(x => x.Name))
         {
             <tr>
+                <td data-row-details-id="@series.SeriesId"><i class="glyphicon glyphicon-chevron-right"></i></td>
                 <td>
                     <a class="act act-primary" href="@Url.RouteUrl("series/details", new { id = series.SeriesId })">@series.Name</a>
+                </td>
+                <td class="text-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        if (series.Following)
-                         {
-                             <button type="button" class="btn btn-success btn-xs pull-right" data-seriesid="@series.SeriesId">
-                                 <span class="glyphicon glyphicon-check"></span>
-                             </button>
-                         }
-                         else
-                         {
-                             <button type="button" class="btn btn-primary btn-xs pull-right" data-seriesid="@series.SeriesId">
-                                 <span class="glyphicon glyphicon-unchecked"></span>
-                             </button>
-                         }
+                        <text>@series.NumberOfViewedEpisodes /</text>
                     }
+                    @series.NumberOfEpisodes
                 </td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td>
+                        @if (series.Following)
+                            {
+                                <button type="button" class="btn btn-success btn-xs pull-right" data-seriesid="@series.SeriesId">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary btn-xs pull-right" data-seriesid="@series.SeriesId">
+                                    <span class="glyphicon glyphicon-unchecked"></span>
+                                </button>
+                            }
+                    </td>
+                }
+            </tr>
+            <tr id="@series.SeriesId" class="collapse">
+                <td colspan="4">@series.Description</td>
             </tr>
         }
     </tbody>
@@ -39,42 +63,9 @@
 
 @section scripts {
     <script type="text/javascript">
-        (function (window, undefined) {
-            $("body").on("click", ".btn-primary", function (event) {
-                var button = $(event.target).closest(".btn-primary");
-                button.attr("disabled", true);
-
-                $.ajax({
-                    type: "PUT",
-                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("seriesid"),
-                    success: function () {
-                        button.toggleClass("btn-primary btn-success");
-                        button.children(".glyphicon-unchecked").toggleClass("glyphicon-unchecked glyphicon-check");
-                        button.attr("disabled", false);
-                    },
-                    error: function () {
-                        button.attr("disabled", false);
-                    }
-                });
-            });
-
-            $("body").on("click", ".btn-success", function (event) {
-                var button = $(event.target).closest(".btn-success");
-                button.attr("disabled", true);
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "@Url.HttpRouteUrl("api/series", null)/" + button.data("seriesid"),
-                    success: function () {
-                        button.toggleClass("btn-success btn-primary");
-                        button.children(".glyphicon-check").toggleClass("glyphicon-check glyphicon-unchecked");
-                        button.attr("disabled", false);
-                    },
-                    error: function () {
-                        button.attr("disabled", false);
-                    }
-                });
-            });
-        })(window);
+        @if (User.Identity.IsAuthenticated)
+        {
+            <text>initToggleButtons("@Url.HttpRouteUrl("api/series", new { @id = "" })", "seriesid");</text>
+        }
     </script>
 }

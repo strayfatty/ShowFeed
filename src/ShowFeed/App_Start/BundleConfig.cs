@@ -17,7 +17,8 @@
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-actionlinks.css",
                 "~/Content/bs-navbar.css",
-                "~/Content/bs-calendar.css"));
+                "~/Content/bs-calendar.css",
+                "~/Content/custom.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/js").Include(
                 "~/Scripts/jquery-2.0.3.js",

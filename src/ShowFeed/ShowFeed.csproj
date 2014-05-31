@@ -172,6 +172,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bs-navbar.css" />
+    <Content Include="Content\custom.css" />
     <Content Include="Content\img\dark_wood.png" />
     <Content Include="Content\img\slide-bg.png" />
     <Content Include="Content\img\tick.png" />
@@ -191,6 +192,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\EpisodesApiController.cs" />
     <Compile Include="Api\SeriesApiController.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
