@@ -1853,6 +1853,44 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./src/features/follows/followsComponent.css":
+/*!***************************************************!*\
+  !*** ./src/features/follows/followsComponent.css ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/features/follows/followsComponent.ts":
+/*!**************************************************!*\
+  !*** ./src/features/follows/followsComponent.ts ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+__webpack_require__(/*! ./followsComponent.css */ "./src/features/follows/followsComponent.css");
+var m = __webpack_require__(/*! mithril */ "./node_modules/mithril/mithril.js");
+var FollowsComponent = /** @class */ (function () {
+    function FollowsComponent() {
+    }
+    FollowsComponent.prototype.oninit = function () {
+    };
+    FollowsComponent.prototype.view = function () {
+        return m('h1', 'Follows');
+    };
+    return FollowsComponent;
+}());
+exports.default = FollowsComponent;
+
+
+/***/ }),
+
 /***/ "./src/features/series/seriesComponent.css":
 /*!*************************************************!*\
   !*** ./src/features/series/seriesComponent.css ***!
@@ -1949,8 +1987,10 @@ __webpack_require__(/*! ./index.css */ "./src/index.css");
 var m = __webpack_require__(/*! mithril */ "./node_modules/mithril/mithril.js");
 var layoutComponent_1 = __webpack_require__(/*! layoutComponent */ "./src/layoutComponent.ts");
 var seriesComponent_1 = __webpack_require__(/*! features/series/seriesComponent */ "./src/features/series/seriesComponent.ts");
+var followsComponent_1 = __webpack_require__(/*! features/follows/followsComponent */ "./src/features/follows/followsComponent.ts");
 m.route(document.body, '/series', {
-    '/series': { render: function () { return m(layoutComponent_1.default, m(seriesComponent_1.default)); } }
+    '/series': { render: function () { return m(layoutComponent_1.default, m(seriesComponent_1.default)); } },
+    '/follows': { render: function () { return m(layoutComponent_1.default, m(followsComponent_1.default)); } }
 });
 
 
@@ -1985,11 +2025,28 @@ var LayoutComponent = function () {
     };
     function render(vnode) {
         return [
-            m('h1', 'ShowFeed'),
-            m('div', vnode.children)
+            m('header', { class: 'header' }, [
+                m('a', { class: 'brand', href: '/', oncreate: m.route.link }, 'ShowFeed'),
+                m('ul', { class: 'nav-bar' }, [
+                    m('li', { class: 'nav-item' }, renderLink('/series', 'Series')),
+                    m('li', { class: 'nav-item' }, renderLink('/follows', 'Following')),
+                ])
+            ]),
+            m('main', { class: 'main' }, vnode.children)
         ];
     }
 };
+function renderLink(href, text) {
+    var attributes = {
+        class: 'nav-link',
+        href: href,
+        oncreate: m.route.link,
+    };
+    if (m.route.get().indexOf(href) === 0) {
+        attributes.class += ' nav-link-active';
+    }
+    return m('a', attributes, text);
+}
 exports.default = LayoutComponent;
 
 
