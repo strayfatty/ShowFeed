@@ -2025,11 +2025,20 @@ var LayoutComponent = function () {
     };
     function render(vnode) {
         return [
-            m('header', { class: 'header' }, [
-                m('a', { class: 'brand', href: '/', oncreate: m.route.link }, 'ShowFeed'),
-                m('ul', { class: 'nav-bar' }, [
-                    m('li', { class: 'nav-item' }, renderLink('/series', 'Series')),
-                    m('li', { class: 'nav-item' }, renderLink('/follows', 'Following')),
+            m('header', { class: 'nav' }, [
+                m('div', { class: 'nav-brand' }, 'ShowFeed'),
+                m('div', { class: 'nav-menu' }, [
+                    m('div', { class: 'nav-left' }, [
+                        m('div', { class: 'nav-items' }, [
+                            renderLink('/series', 'Series'),
+                            renderLink('/follows', 'Follows')
+                        ])
+                    ]),
+                    m('div', { class: 'nav-right' }, [
+                        m('div', { class: 'nav-items' }, [
+                            renderLink('/login', 'Login')
+                        ])
+                    ])
                 ])
             ]),
             m('main', { class: 'main' }, vnode.children)
@@ -2038,12 +2047,12 @@ var LayoutComponent = function () {
 };
 function renderLink(href, text) {
     var attributes = {
-        class: 'nav-link',
+        class: 'nav-item',
         href: href,
         oncreate: m.route.link,
     };
     if (m.route.get().indexOf(href) === 0) {
-        attributes.class += ' nav-link-active';
+        attributes.class += ' nav-item-active';
     }
     return m('a', attributes, text);
 }
