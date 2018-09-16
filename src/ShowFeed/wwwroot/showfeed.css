@@ -7,7 +7,7 @@ html, body {
 }
 .nav {
   display: flex;
-  padding: 8px 15px;
+  padding: 0 15px;
 
   flex-direction: column;
   flex-wrap: nowrap;
@@ -30,19 +30,22 @@ html, body {
   color: #777;
   text-decoration: none;
   font-size: 18px;
+  line-height: 18px;
+  padding-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .nav-brand {
+    padding-bottom: 16px;
+    padding-right: 7px;
+  }
 }
 
 .nav-menu {
   display: flex;
   flex-direction: row;
-
   width: 100%;
-}
-
-@media (min-width: 768px) {
-  .nav-menu {
-    padding-left: 15px;
-  }
+  padding: 8px 0;
 }
 
 .nav-left {
@@ -59,19 +62,21 @@ html, body {
   color: #777;
   text-decoration: none;
 
-  padding: 8px;
+  padding: 8px 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-.nav-item:first-child {
-  padding-left: 0;
-}
-
-.nav-item:last-child {
-  padding-right: 0;
+@media (min-width: 768px) {
+  .nav-item {
+    padding: 17px 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 }
 
 .nav-item-active {
-  font-weight: bold;
+  background-color: #e7e7e7;
 }
 
 .main {
